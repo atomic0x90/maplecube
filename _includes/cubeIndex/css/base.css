@@ -1,0 +1,824 @@
+@import url('https://fonts.googleapis.com/scc2?family=Ubuntu:wght@300;400;500;700&display=swap');
+*
+{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family:'Ubuntu',sans-serif;
+}
+:root
+{
+	--blue: #287bff;
+	--white: #fff;
+	--grey: #f5f5f5;
+	--black1: #222;
+	--black2: #999;
+	--black3: #444548;
+	--red: #ff5733;
+	--green: #66FF66;
+	--black: #000000;
+	--purple: #8B00FF;
+	--yellow: #FFF44F;
+	--brown: #964B00;
+	--sColor: #FBCEB1;
+}
+.post
+{
+	position: absolute;
+}
+body
+{
+	min-height: 100vh;
+	overflow-x: hidden;
+}
+#topScroll
+{
+	position: fixed;
+	bottom: 4%;
+	right: 4%;
+	width: 55px;
+	height: 55px;
+	border-radius: 50%;
+	overflow: hidden;
+	cursor: pointer;
+	border: 0;
+	outline: 0;
+	color: var(--black2);
+	background-color:transparent;
+	z-index: 1;
+}
+#topScroll ion-icon
+{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.container
+{
+	position: relative;
+	width: 100%;
+}
+.navigation
+{
+	position: fixed;
+	width: 300px;
+	height: 100%;
+	background: var(--blue);
+	border-left: 10px solid var(--blue);
+	transition: 0.5s;
+	overflow: hidden;
+}
+.navigation.active
+{
+	width: 60px;
+}
+.navigation .icon
+{
+	z-index:1;
+}
+.navigation ul
+{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+}
+.navigation ul li
+{
+	position: relative;
+	width: 100%;
+	list-style: none;
+	border-top-left-radius: 30px;
+	border-bottom-left-radius: 30px;
+}
+/*
+.navigation ul li:hover,
+*/
+.navigation ul li.clicked
+{
+	background: var(--white);
+}
+.navigation ul li:nth-child(1)
+{
+	margin-bottom: 40px;
+	pointer-events: none;
+}
+.navigation ul li a
+{
+	position: relative;
+	display: block;
+	width: 100%;
+	display: flex;
+	text-decoration: none;
+	color: var(--white);
+}
+/*
+.navigation ul li:hover a,
+*/
+.navigation ul li.clicked a
+{
+	transition: 0.75s;
+	color: var(--blue);
+}
+.navigation ul li a .icon
+{
+	position: relative;
+	display: block;
+	min-width: 60px;
+	height: 60px;
+	line-height: 60px;
+	text-align: center;
+}
+/*
+.navigation ul li a .icon ion-icon
+{
+	font-size:1.75em;
+}
+*/
+
+.navigation ul li a .title
+{
+	position: relative;
+	display: block;
+	padding: 0 10px;
+	height: 60px;
+	line-height: 60px;
+	text-align: start;
+	white-space: nowrap;
+}
+
+/* curve outside*/
+
+/*
+.navigation ul li:hover a::before,
+*/
+
+.navigation ul li.clicked a::before
+{
+	content: '';
+	position: absolute;
+	right: 0;
+	top: -50px;
+	width: 50px;
+	height: 50px;
+	background: transparent;
+	border-radius: 50%;
+	box-shadow: 35px 35px 0 10px var(--white);
+	pointer-events: none;
+}
+
+/*
+.navigation ul li:hover a::after,
+*/
+.navigation ul li.clicked a::after
+{
+	content: '';
+	position: absolute;
+	right: 0;
+	bottom: -50px;
+	width: 50px;
+	height: 50px;
+	background: transparent;
+	border-radius: 50%;
+	box-shadow: 35px -35px 0 10px var(--white);
+	pointer-events: none;
+}
+
+/* main */
+.main
+{
+	position: absolute;
+	width: calc(100% - 300px);
+	left: 300px;
+	min-height: 100vh;
+	background: var(--white);
+	transition: 0.3s;
+}
+.main.active
+{
+	width: calc(100% - 80px);
+	left: 80px;
+}
+.topbar
+{
+	width: 100%;
+	height: 300px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0 10px;
+}
+.toggle
+{
+	position: relative;
+	width: 60px;
+	height: 60px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 2.5em;
+	cursor: pointer;
+}
+.topAds
+{
+	position: relative;
+	width: 100%;
+	height: 300px;
+	margin: 0 10px;
+}
+.cardAdsense
+{
+	position: relative;
+	width: 100%;
+	height: 300px;
+}
+.cardAdsenseFooter
+{
+	position: relative;
+	width: 100%;
+	height: 300px;
+}
+
+.user
+{
+	position: relative;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	overflow: hidden;
+	cursor: pointer;
+}
+.user img
+{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.details
+{
+	position: relative;
+	width: 100%;
+	padding: 20px;
+	display: block;
+	/*grid-template-columns: 2fr 1fr;*/
+	/*grid-gap: 30px;*/
+	/*margin-top: 10px;*/
+}
+.details .data
+{
+	position: relative;
+	display: block;
+	/*min-height: 500px;*/
+	background: var(--white);
+	padding: 20px;
+	box-shadow: 0 7px 25px rgba(0,0,0,0.08);
+	border-radius: 20px;
+}
+.header
+{
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+}
+.header h2
+{
+	font-weight: 600;
+	color: var(--blue);
+}
+.btn
+{
+	position: relative;
+	padding: 5px 10px;
+	background: var(--blue);
+	text-decoration: none;
+	color: var(--white);
+	border-radius: 6px;
+}
+.details table
+{
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 10px;
+}
+.details table thead td
+{
+	font-weight: 600;
+}
+.details .data table tr
+{
+	color: var(--black1);
+	border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+.details .data table tr:last-child
+{
+	border-bottom: none;
+}
+.details .data table tbody tr:hover
+{
+	background: var(--blue);
+	color: var(--white);
+}
+.details .data table tr td
+{
+	padding:10px;
+	text-align: center;
+}
+
+/*
+	cube
+*/
+.cubeBox
+{
+	position: relative;
+	width: 100%;
+	padding: 20px;
+	display: grid;
+	grid-template-columns: repeat(6,1fr);
+	grid-gap: 30px;
+}
+.cubeBox .cube
+{
+	position: relative;
+	background: var(--white);
+	padding: 30px;
+	border-radius: 20px;
+	display: flex;
+	justify-content: space-between;
+	cursor: pointer;
+	box-shadow:0 7px 25px rgba(0,0,0,0.08);
+}
+
+.cubeBox .cube .cubeName
+{
+	color: var(--black1);
+	font-size: 1.1em;
+	margin-top: 5px;
+}
+.cubeBox .cube .iconBx
+{
+	font-size: 3.5em;
+	color: var(--black2);
+}
+.cubeBox .cube .iconBx .red
+{
+	color: var(--red);
+}
+.cubeBox .cube .iconBx .black
+{
+	color: var(--black3);
+}
+.cubeBox .cube .iconBx .additional
+{
+	color: var(--green);
+}
+.cubeBox .cube .iconBx .questionable
+{
+	color: var(--brown);
+}
+.cubeBox .cube .iconBx .expert
+{
+	color: var(--yellow);
+}
+.cubeBox .cube .iconBx .master
+{
+	color: var(--purple);
+}
+
+.cubeBox .cube:hover
+{
+	background: var(--blue);
+}
+.cubeBox .cube:hover .cubeName,
+.cubeBox .cube:hover .iconBx .red,
+.cubeBox .cube:hover .iconBx .black,
+.cubeBox .cube:hover .iconBx .additional,
+.cubeBox .cube:hover .iconBx .questionable,
+.cubeBox .cube:hover .iconBx .expert,
+.cubeBox .cube:hover .iconBx .master
+{
+	color: var(--white);
+}
+/*
+	cube
+*/
+
+
+/*************ability*************/
+.abilityBox
+{
+	position: relative;
+	width: 100%;
+	padding: 20px;
+	display: grid;
+	grid-template-columns: repeat(2,1fr);
+	grid-gap: 30px;
+}
+.abilityBox .ability
+{
+	position: relative;
+	background: var(--white);
+	padding: 30px;
+	border-radius: 20px;
+	display: flex;
+	justify-content: space-between;
+	cursor: pointer;
+	box-shadow:0 7px 25px rgba(0,0,0,0.08);
+}
+
+.abilityBox .ability .abilityName
+{
+	color: var(--black1);
+	font-size: 1.1em;
+	margin-top: 5px;
+}
+.abilityBox .ability .iconBx
+{
+	font-size: 3.5em;
+	color: var(--black2);
+}
+.abilityBox .ability .iconBx .ability1
+{
+	color: var(--blue);
+}
+.abilityBox .ability .iconBx .ability2
+{
+	color: var(--yellow);
+}
+
+.abilityBox .ability:hover
+{
+	background: var(--blue);
+}
+.abilityBox .ability:hover .abilityName,
+.abilityBox .ability:hover .iconBx .ability1,
+.abilityBox .ability:hover .iconBx .ability2
+{
+	color: var(--white);
+}
+/*************ability*************/
+
+/************loyalStyle***********/
+
+.masterpieceBox
+{
+	position: relative;
+	width: 100%;
+	padding: 20px;
+	display: grid;
+	grid-template-columns: repeat(3,1fr);
+	grid-gap: 30px;
+}
+.masterpieceBox .masterpiece
+{
+	position: relative;
+	background: var(--white);
+	padding: 30px;
+	border-radius: 20px;
+	display: flex;
+	justify-content: space-between;
+	cursor: pointer;
+	box-shadow:0 7px 25px rgba(0,0,0,0.08);
+}
+
+.masterpieceBox .masterpiece .masterpieceName
+{
+	color: var(--black1);
+	font-size: 1.1em;
+	margin-top: 5px;
+}
+.masterpieceBox .masterpiece .iconBx
+{
+	font-size: 3.5em;
+	color: var(--black2);
+}
+.masterpieceBox .masterpiece .iconBx .loyalstyle
+{
+	color: var(--yellow);
+}
+.masterpieceBox .masterpiece .iconBx .redHat,
+.masterpieceBox .masterpiece .iconBx .redClothes,
+.masterpieceBox .masterpiece .iconBx .redCloakGloves,
+.masterpieceBox .masterpiece .iconBx .redShoes,
+.masterpieceBox .masterpiece .iconBx .redWeapon
+{
+	color: var(--red);
+}
+.masterpieceBox .masterpiece .iconBx .blackHat,
+.masterpieceBox .masterpiece .iconBx .blackClothes,
+.masterpieceBox .masterpiece .iconBx .blackCloakGloves,
+.masterpieceBox .masterpiece .iconBx .blackShoes,
+.masterpieceBox .masterpiece .iconBx .blackWeapon
+{
+	color: var(--black3);
+}
+
+.masterpieceBox .masterpiece:hover
+{
+	background: var(--blue);
+}
+.masterpieceBox .masterpiece:hover .masterpieceName,
+.masterpieceBox .masterpiece:hover .iconBx .loyalstyle,
+.masterpieceBox .masterpiece:hover .iconBx .redHat,
+.masterpieceBox .masterpiece:hover .iconBx .redClothes,
+.masterpieceBox .masterpiece:hover .iconBx .redCloakGloves,
+.masterpieceBox .masterpiece:hover .iconBx .redShoes,
+.masterpieceBox .masterpiece:hover .iconBx .redWeapon,
+.masterpieceBox .masterpiece:hover .iconBx .blackHat,
+.masterpieceBox .masterpiece:hover .iconBx .blackClothes,
+.masterpieceBox .masterpiece:hover .iconBx .blackCloakGloves,
+.masterpieceBox .masterpiece:hover .iconBx .blackShoes,
+.masterpieceBox .masterpiece:hover .iconBx .blackWeapon
+{
+	color: var(--white);
+}
+
+/************loyalStyle***********/
+
+/*************beauty*************/
+.beautyBox
+{
+	position: relative;
+	width: 100%;
+	padding: 20px;
+	display: grid;
+	grid-template-columns: repeat(4,1fr);
+	grid-gap: 30px;
+}
+.beautyBox .beauty
+{
+	position: relative;
+	background: var(--white);
+	padding: 30px;
+	border-radius: 20px;
+	display: flex;
+	justify-content: space-between;
+	cursor: pointer;
+	box-shadow:0 7px 25px rgba(0,0,0,0.08);
+}
+
+.beautyBox .beauty .beautyName
+{
+	color: var(--black1);
+	font-size: 1.1em;
+	margin-top: 5px;
+}
+.beautyBox .beauty .iconBx
+{
+	font-size: 3.5em;
+	color: var(--black2);
+}
+.beautyBox .beauty .iconBx .manHair,
+.beautyBox .beauty .iconBx .womanHair
+{
+	color: var(--black2);
+}
+.beautyBox .beauty .iconBx .manFace,
+.beautyBox .beauty .iconBx .womanFace
+{
+	color: var(--sColor);
+}
+
+.beautyBox .beauty:hover
+{
+	background: var(--blue);
+}
+.beautyBox .beauty:hover .beautyName,
+.beautyBox .beauty:hover .iconBx .manHair,
+.beautyBox .beauty:hover .iconBx .womanHair,
+.beautyBox .beauty:hover .iconBx .manFace,
+.beautyBox .beauty:hover .iconBx .womanFace
+{
+	color: var(--white);
+}
+/*************beauty*************/
+
+/*************spell*************/
+.spellBox
+{
+	position: relative;
+	width: 100%;
+	padding: 20px;
+	display: grid;
+	grid-template-columns: repeat(4,1fr);
+	grid-gap: 30px;
+}
+.spellBox .spell
+{
+	position: relative;
+	background: var(--white);
+	padding: 30px;
+	border-radius: 20px;
+	display: flex;
+	justify-content: space-between;
+	cursor: pointer;
+	box-shadow:0 7px 25px rgba(0,0,0,0.08);
+}
+
+.spellBox .spell .spellName
+{
+	color: var(--black1);
+	font-size: 1.1em;
+	margin-top: 5px;
+}
+.spellBox .spell .iconBx
+{
+	font-size: 3.5em;
+	color: var(--black2);
+}
+.spellBox .spell .iconBx .spell1,
+.spellBox .spell .iconBx .spell2,
+.spellBox .spell .iconBx .spell3,
+.spellBox .spell .iconBx .spell4
+{
+	color: var(--brown);
+}
+
+.spellBox .spell:hover
+{
+	background: var(--blue);
+}
+.spellBox .spell:hover .spellName,
+.spellBox .spell:hover .iconBx .spell1,
+.spellBox .spell:hover .iconBx .spell2,
+.spellBox .spell:hover .iconBx .spell3,
+.spellBox .spell:hover .iconBx .spell4
+{
+	color: var(--white);
+}
+/*************spell*************/
+
+/*************starforce*************/
+.starforceBox
+{
+	position: relative;
+	width: 100%;
+	padding: 20px;
+	display: grid;
+	grid-template-columns: repeat(2,1fr);
+	grid-gap: 30px;
+}
+.starforceBox .starforce
+{
+	position: relative;
+	background: var(--white);
+	padding: 30px;
+	border-radius: 20px;
+	display: flex;
+	justify-content: space-between;
+	cursor: pointer;
+	box-shadow:0 7px 25px rgba(0,0,0,0.08);
+}
+
+.starforceBox .starforce .starforceName
+{
+	color: var(--black1);
+	font-size: 1.1em;
+	margin-top: 5px;
+}
+.starforceBox .starforce .iconBx
+{
+	font-size: 3.5em;
+	color: var(--black2);
+}
+.starforceBox .starforce .iconBx .starforce1,
+.starforceBox .starforce .iconBx .starforce2
+{
+	color: var(--yellow);
+}
+
+.starforceBox .starforce:hover
+{
+	background: var(--blue);
+}
+.starforceBox .starforce:hover .starforceName,
+.starforceBox .starforce:hover .iconBx .starforce1,
+.starforceBox .starforce:hover .iconBx .starforce2
+{
+	color: var(--white);
+}
+/*************starforce*************/
+
+.status.delivered
+{
+	padding: 2px 4px;
+	background: #8de02c;
+	color: var(--white);
+	border-radius: 4px;
+	font-size: 14px;
+	font-weight: 500;
+}
+
+/* responsive design*/
+@media (max-width: 1400px)
+{
+	.navigation
+	{
+		left: -300px;
+	}
+	.navigation.active
+	{
+		width: 300px;
+		left: 0;
+	}
+	.main
+	{
+		width: 100%;
+		left: 0;
+	}
+	.main.active
+	{
+		left: 300px;
+	}
+	.cubeBox,
+	.masterpieceBox,
+	.beautyBox,
+	.spellBox
+	{
+		grid-template-columns: repeat(2,1fr);
+	}
+}
+@media (max-width: 768px)
+{
+	.details
+	{
+		grid-template-columns: repeat(1,1fr);
+	}
+	.recentOrders
+	{
+		overflow-x: auto;
+	}
+	.status.inprogress
+	{
+		white-space: nowrap;
+	}
+}
+@media (max-width: 480px)
+{
+	.cubeBox,
+	.abilityBox,
+	.masterpieceBox,
+	.beautyBox,
+	.spellBox,
+	.startforceBox
+	{
+		grid-template-columns: repeat(1,1fr);
+	}
+	.cubeHeader h2
+	{
+		font-size: 20px;
+	}
+	.user
+	{
+		min-width: 40px;
+	}
+	.navigation
+	{
+		width: 100%;
+		left: -100%;
+		z-index: 1000;
+	}
+	.navigation.active
+	{
+		width: 100%;
+		left: 0;
+	}
+	.toggle
+	{
+		z-index: 1001;
+	}
+	.main.active .toggle
+	{
+		position: fixed;
+		right: 0;
+		left: initial;
+		color: #fff;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

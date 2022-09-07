@@ -1,0 +1,1170 @@
+---
+---
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+<meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ site.title }}</title>
+	<meta name="keywords" content="{{ site.keywords }}">
+	<meta name="description" content="{{ site.description }}">
+	<meta name="theme-color" content="FFA500">
+  <link rel="stylesheet" href="combo.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+  {% if site.favicon %}<link rel="shortcut icon" href="{{ site.favicon }}" type="image/x-icon">{% endif %}
+	{% if site.touch_icon %}<link rel="apple-touch-icon" href="{{ site.touch_icon }}">{% endif %}
+
+	<!-- random -->
+	<script src="https://cdn.jsdelivr.net/npm/d3-random@3"></script>
+
+	<!-- chart -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-141573766-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-141573766-1');
+</script>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2341434509700379"
+     crossorigin="anonymous"></script>
+
+</head>
+<body>
+<div class='wrapBody'>
+	<!--main-->
+	<div class='wrapContent'>
+
+		<div class='mainLeft'>
+		</div>
+
+		<div class='main'>
+			<span align=center><h2>메이플 큐브 기댓값 계산기</h2></span>
+			<br><hr><br>
+			<span class='howtouse'>사용 방법</span>
+			<br><hr><br>
+			<span>1.큐브를 돌릴 등급을 설정한다.</span><br>
+			<span>2.어떤 큐브를 돌릴지 설정한다.</span><br>
+			<span>3.어떤 부위를 돌릴지 설정한다.</span><br>
+			<span>4.아이템의 레벨 제한을 설정한다.</span><br>
+			<span>5.원하는 잠재능력을 설정한다.</span><br>
+			<span>6.잠재능력 1줄이나 2줄을 목표한다면 상관 없음을 체크한다.</span><br>
+			<span>7.시뮬레이션을 돌려서 결과를 확인한다.</span>
+			<br><hr><br>
+			<select id='rank' onchange='changeRankSelector()'>
+				<option value='rare'>레어</option>
+				<option value='epic'>에픽</option>
+				<option value='unique'>유니크</option>
+				<option value='legendary'>레전더리</option>
+			</select>
+			<select id='cubeSelector' onchange='changeCubeSelector()'>
+				<option value='red'>레드 큐브</option>
+				<option value='black'>블랙 큐브</option>
+				<option value='additional'>에디셔널 큐브</option>
+				<option value='expert'>장인의 큐브</option>
+				<option value='master'>명장의 큐브</option>
+				<option value='questionable'>수상한 큐브</option>
+			</select>
+			<select id='equipment' onchange='changeEquipmentSelector()'>
+				<option value='weapon'>무기</option>
+				<option value='emblem'>엠블렘</option>
+				<option value='additionalWeapon'>보조무기(포스실드,소울링 제외)</option>
+				<option value='forceshieldSouling'>포스실드,소울링</option>
+				<option value='shield'>방패</option>
+				<option value='hat'>모자</option>
+				<option value='top'>상의</option>
+				<option value='dress'>한벌옷</option>
+				<option value='bottom'>하의</option>
+				<option value='shoes'>신발</option>
+				<option value='gloves'>장갑</option>
+				<option value='cloak'>망토</option>
+				<option value='belt'>벨트</option>
+				<option value='shoulderDecoration'>어깨장식</option>
+				<option value='faceDecoration'>얼굴장식</option>
+				<option value='eyeDecoration'>눈장식</option>
+				<option value='earring'>귀고리</option>
+				<option value='ring'>반지</option>
+				<option value='pendant'>펜던트</option>
+				<option value='machineHeart'>기계심장</option>
+			</select>
+			<select id='level' onchange='changeSelector()'></select>
+			<p>
+			<select id='s1'></select><input type='checkbox' id='s1Check'>상관 없음</input>
+			<p>
+			<select id='s2'></select><input type='checkbox' id='s2Check'>상관 없음</input>
+			<p>
+			<select id='s3'></select><input type='checkbox' id='s3Check'>상관 없음</input>
+			<p>
+			<button onclick='calculateFunction()'><span>시뮬레이션 계산</span></button>
+			<p><hr><p>
+			<span id='p1'></span>
+			<span id='p2'></span>
+			<span id='p3'></span>
+
+			<span id='optionText'></span>
+
+			<br><hr><br>
+			<canvas class='resultChart'></canvas>
+			<span id='resultText'></span>
+
+			<div class='mainBottomBlankArea'></div>
+		</div><!-- class main -->
+
+		<div class='mainRight'>
+		</div>
+	</div>
+
+	<footer>
+		<ul>
+			<li><ion-icon name="mail-outline"></ion-icon>
+				<a href='mailto:mapledataconnect@gmail.com'>
+				mapledataconnect@gmail.com</a></li>
+			<li><ion-icon name="logo-github"></ion-icon>
+				<a href='https://github.com/atomic0x90'>
+				https://github.com/atomic0x90</a></li>
+			<li><ion-icon name="terminal-outline"></ion-icon> 
+				<a href='https://atomic0x90.github.io'>
+				https://atomic0x90.github.io</a></li>
+		</ul>
+	</footer>
+</div><!-- wrap body -->
+
+<!-- cube data -->
+<div style='display:none;'>
+<!-- red -->
+{% include /cubeIndex/red/weapon/rare/120-200.html %}
+{% include /cubeIndex/red/weapon/epic/120-200.html %}
+{% include /cubeIndex/red/weapon/unique/120-200.html %}
+{% include /cubeIndex/red/weapon/legendary/120-200.html %}
+
+{% include /cubeIndex/red/emblem/rare/100.html %}
+{% include /cubeIndex/red/emblem/epic/100.html %}
+{% include /cubeIndex/red/emblem/unique/100.html %}
+{% include /cubeIndex/red/emblem/legendary/100.html %}
+
+{% include /cubeIndex/red/emblem/rare/120-200.html %}
+{% include /cubeIndex/red/emblem/epic/120-200.html %}
+{% include /cubeIndex/red/emblem/unique/120-200.html %}
+{% include /cubeIndex/red/emblem/legendary/120-200.html %}
+
+{% include /cubeIndex/red/additionalWeapon/rare/100.html %}
+{% include /cubeIndex/red/additionalWeapon/epic/100.html %}
+{% include /cubeIndex/red/additionalWeapon/unique/100.html %}
+{% include /cubeIndex/red/additionalWeapon/legendary/100.html %}
+
+{% include /cubeIndex/red/forceshieldSouling/rare/100.html %}
+{% include /cubeIndex/red/forceshieldSouling/epic/100.html %}
+{% include /cubeIndex/red/forceshieldSouling/unique/100.html %}
+{% include /cubeIndex/red/forceshieldSouling/legendary/100.html %}
+
+{% include /cubeIndex/red/shield/rare/120-200.html %}
+{% include /cubeIndex/red/shield/epic/120-200.html %}
+{% include /cubeIndex/red/shield/unique/120-200.html %}
+{% include /cubeIndex/red/shield/legendary/120-200.html %}
+
+{% include /cubeIndex/red/hat/rare/120-200.html %}
+{% include /cubeIndex/red/hat/epic/120-200.html %}
+{% include /cubeIndex/red/hat/unique/120-200.html %}
+{% include /cubeIndex/red/hat/legendary/120-200.html %}
+
+{% include /cubeIndex/red/hat/rare/201-250.html %}
+{% include /cubeIndex/red/hat/epic/201-250.html %}
+{% include /cubeIndex/red/hat/unique/201-250.html %}
+{% include /cubeIndex/red/hat/legendary/201-250.html %}
+
+{% include /cubeIndex/red/top/rare/120-200.html %}
+{% include /cubeIndex/red/top/epic/120-200.html %}
+{% include /cubeIndex/red/top/unique/120-200.html %}
+{% include /cubeIndex/red/top/legendary/120-200.html %}
+
+{% include /cubeIndex/red/top/rare/201-250.html %}
+{% include /cubeIndex/red/top/epic/201-250.html %}
+{% include /cubeIndex/red/top/unique/201-250.html %}
+{% include /cubeIndex/red/top/legendary/201-250.html %}
+
+{% include /cubeIndex/red/dress/rare/120-200.html %}
+{% include /cubeIndex/red/dress/epic/120-200.html %}
+{% include /cubeIndex/red/dress/unique/120-200.html %}
+{% include /cubeIndex/red/dress/legendary/120-200.html %}
+
+{% include /cubeIndex/red/bottom/rare/120-200.html %}
+{% include /cubeIndex/red/bottom/epic/120-200.html %}
+{% include /cubeIndex/red/bottom/unique/120-200.html %}
+{% include /cubeIndex/red/bottom/legendary/120-200.html %}
+
+{% include /cubeIndex/red/bottom/rare/201-250.html %}
+{% include /cubeIndex/red/bottom/epic/201-250.html %}
+{% include /cubeIndex/red/bottom/unique/201-250.html %}
+{% include /cubeIndex/red/bottom/legendary/201-250.html %}
+
+{% include /cubeIndex/red/shoes/rare/120-200.html %}
+{% include /cubeIndex/red/shoes/epic/120-200.html %}
+{% include /cubeIndex/red/shoes/unique/120-200.html %}
+{% include /cubeIndex/red/shoes/legendary/120-200.html %}
+
+{% include /cubeIndex/red/gloves/rare/120-200.html %}
+{% include /cubeIndex/red/gloves/epic/120-200.html %}
+{% include /cubeIndex/red/gloves/unique/120-200.html %}
+{% include /cubeIndex/red/gloves/legendary/120-200.html %}
+
+{% include /cubeIndex/red/cloak/rare/120-200.html %}
+{% include /cubeIndex/red/cloak/epic/120-200.html %}
+{% include /cubeIndex/red/cloak/unique/120-200.html %}
+{% include /cubeIndex/red/cloak/legendary/120-200.html %}
+
+{% include /cubeIndex/red/belt/rare/120-200.html %}
+{% include /cubeIndex/red/belt/epic/120-200.html %}
+{% include /cubeIndex/red/belt/unique/120-200.html %}
+{% include /cubeIndex/red/belt/legendary/120-200.html %}
+
+{% include /cubeIndex/red/shoulderDecoration/rare/120-200.html %}
+{% include /cubeIndex/red/shoulderDecoration/epic/120-200.html %}
+{% include /cubeIndex/red/shoulderDecoration/unique/120-200.html %}
+{% include /cubeIndex/red/shoulderDecoration/legendary/120-200.html %}
+
+{% include /cubeIndex/red/faceDecoration/rare/120-200.html %}
+{% include /cubeIndex/red/faceDecoration/epic/120-200.html %}
+{% include /cubeIndex/red/faceDecoration/unique/120-200.html %}
+{% include /cubeIndex/red/faceDecoration/legendary/120-200.html %}
+
+{% include /cubeIndex/red/eyeDecoration/rare/120-200.html %}
+{% include /cubeIndex/red/eyeDecoration/epic/120-200.html %}
+{% include /cubeIndex/red/eyeDecoration/unique/120-200.html %}
+{% include /cubeIndex/red/eyeDecoration/legendary/120-200.html %}
+
+{% include /cubeIndex/red/earring/rare/120-200.html %}
+{% include /cubeIndex/red/earring/epic/120-200.html %}
+{% include /cubeIndex/red/earring/unique/120-200.html %}
+{% include /cubeIndex/red/earring/legendary/120-200.html %}
+
+{% include /cubeIndex/red/ring/rare/120-200.html %}
+{% include /cubeIndex/red/ring/epic/120-200.html %}
+{% include /cubeIndex/red/ring/unique/120-200.html %}
+{% include /cubeIndex/red/ring/legendary/120-200.html %}
+
+{% include /cubeIndex/red/pendant/rare/120-200.html %}
+{% include /cubeIndex/red/pendant/epic/120-200.html %}
+{% include /cubeIndex/red/pendant/unique/120-200.html %}
+{% include /cubeIndex/red/pendant/legendary/120-200.html %}
+
+{% include /cubeIndex/red/machineHeart/rare/30.html %}
+{% include /cubeIndex/red/machineHeart/epic/30.html %}
+{% include /cubeIndex/red/machineHeart/unique/30.html %}
+{% include /cubeIndex/red/machineHeart/legendary/30.html %}
+
+{% include /cubeIndex/red/machineHeart/rare/100.html %}
+{% include /cubeIndex/red/machineHeart/epic/100.html %}
+{% include /cubeIndex/red/machineHeart/unique/100.html %}
+{% include /cubeIndex/red/machineHeart/legendary/100.html %}
+
+{% include /cubeIndex/red/machineHeart/rare/120.html %}
+{% include /cubeIndex/red/machineHeart/epic/120.html %}
+{% include /cubeIndex/red/machineHeart/unique/120.html %}
+{% include /cubeIndex/red/machineHeart/legendary/120.html %}
+
+<!-- black -->
+{% include /cubeIndex/black/weapon/rare/120-200.html %}
+{% include /cubeIndex/black/weapon/epic/120-200.html %}
+{% include /cubeIndex/black/weapon/unique/120-200.html %}
+{% include /cubeIndex/black/weapon/legendary/120-200.html %}
+
+{% include /cubeIndex/black/emblem/rare/100.html %}
+{% include /cubeIndex/black/emblem/epic/100.html %}
+{% include /cubeIndex/black/emblem/unique/100.html %}
+{% include /cubeIndex/black/emblem/legendary/100.html %}
+
+{% include /cubeIndex/black/emblem/rare/120-200.html %}
+{% include /cubeIndex/black/emblem/epic/120-200.html %}
+{% include /cubeIndex/black/emblem/unique/120-200.html %}
+{% include /cubeIndex/black/emblem/legendary/120-200.html %}
+
+{% include /cubeIndex/black/additionalWeapon/rare/100.html %}
+{% include /cubeIndex/black/additionalWeapon/epic/100.html %}
+{% include /cubeIndex/black/additionalWeapon/unique/100.html %}
+{% include /cubeIndex/black/additionalWeapon/legendary/100.html %}
+
+{% include /cubeIndex/black/forceshieldSouling/rare/100.html %}
+{% include /cubeIndex/black/forceshieldSouling/epic/100.html %}
+{% include /cubeIndex/black/forceshieldSouling/unique/100.html %}
+{% include /cubeIndex/black/forceshieldSouling/legendary/100.html %}
+
+{% include /cubeIndex/black/shield/rare/120-200.html %}
+{% include /cubeIndex/black/shield/epic/120-200.html %}
+{% include /cubeIndex/black/shield/unique/120-200.html %}
+{% include /cubeIndex/black/shield/legendary/120-200.html %}
+
+{% include /cubeIndex/black/hat/rare/120-200.html %}
+{% include /cubeIndex/black/hat/epic/120-200.html %}
+{% include /cubeIndex/black/hat/unique/120-200.html %}
+{% include /cubeIndex/black/hat/legendary/120-200.html %}
+
+{% include /cubeIndex/black/hat/rare/201-250.html %}
+{% include /cubeIndex/black/hat/epic/201-250.html %}
+{% include /cubeIndex/black/hat/unique/201-250.html %}
+{% include /cubeIndex/black/hat/legendary/201-250.html %}
+
+{% include /cubeIndex/black/top/rare/120-200.html %}
+{% include /cubeIndex/black/top/epic/120-200.html %}
+{% include /cubeIndex/black/top/unique/120-200.html %}
+{% include /cubeIndex/black/top/legendary/120-200.html %}
+
+{% include /cubeIndex/black/top/rare/201-250.html %}
+{% include /cubeIndex/black/top/epic/201-250.html %}
+{% include /cubeIndex/black/top/unique/201-250.html %}
+{% include /cubeIndex/black/top/legendary/201-250.html %}
+
+{% include /cubeIndex/black/dress/rare/120-200.html %}
+{% include /cubeIndex/black/dress/epic/120-200.html %}
+{% include /cubeIndex/black/dress/unique/120-200.html %}
+{% include /cubeIndex/black/dress/legendary/120-200.html %}
+
+{% include /cubeIndex/black/bottom/rare/120-200.html %}
+{% include /cubeIndex/black/bottom/epic/120-200.html %}
+{% include /cubeIndex/black/bottom/unique/120-200.html %}
+{% include /cubeIndex/black/bottom/legendary/120-200.html %}
+
+{% include /cubeIndex/black/bottom/rare/201-250.html %}
+{% include /cubeIndex/black/bottom/epic/201-250.html %}
+{% include /cubeIndex/black/bottom/unique/201-250.html %}
+{% include /cubeIndex/black/bottom/legendary/201-250.html %}
+
+{% include /cubeIndex/black/shoes/rare/120-200.html %}
+{% include /cubeIndex/black/shoes/epic/120-200.html %}
+{% include /cubeIndex/black/shoes/unique/120-200.html %}
+{% include /cubeIndex/black/shoes/legendary/120-200.html %}
+
+{% include /cubeIndex/black/gloves/rare/120-200.html %}
+{% include /cubeIndex/black/gloves/epic/120-200.html %}
+{% include /cubeIndex/black/gloves/unique/120-200.html %}
+{% include /cubeIndex/black/gloves/legendary/120-200.html %}
+
+{% include /cubeIndex/black/cloak/rare/120-200.html %}
+{% include /cubeIndex/black/cloak/epic/120-200.html %}
+{% include /cubeIndex/black/cloak/unique/120-200.html %}
+{% include /cubeIndex/black/cloak/legendary/120-200.html %}
+
+{% include /cubeIndex/black/belt/rare/120-200.html %}
+{% include /cubeIndex/black/belt/epic/120-200.html %}
+{% include /cubeIndex/black/belt/unique/120-200.html %}
+{% include /cubeIndex/black/belt/legendary/120-200.html %}
+
+{% include /cubeIndex/black/shoulderDecoration/rare/120-200.html %}
+{% include /cubeIndex/black/shoulderDecoration/epic/120-200.html %}
+{% include /cubeIndex/black/shoulderDecoration/unique/120-200.html %}
+{% include /cubeIndex/black/shoulderDecoration/legendary/120-200.html %}
+
+{% include /cubeIndex/black/faceDecoration/rare/120-200.html %}
+{% include /cubeIndex/black/faceDecoration/epic/120-200.html %}
+{% include /cubeIndex/black/faceDecoration/unique/120-200.html %}
+{% include /cubeIndex/black/faceDecoration/legendary/120-200.html %}
+
+{% include /cubeIndex/black/eyeDecoration/rare/120-200.html %}
+{% include /cubeIndex/black/eyeDecoration/epic/120-200.html %}
+{% include /cubeIndex/black/eyeDecoration/unique/120-200.html %}
+{% include /cubeIndex/black/eyeDecoration/legendary/120-200.html %}
+
+{% include /cubeIndex/black/earring/rare/120-200.html %}
+{% include /cubeIndex/black/earring/epic/120-200.html %}
+{% include /cubeIndex/black/earring/unique/120-200.html %}
+{% include /cubeIndex/black/earring/legendary/120-200.html %}
+
+{% include /cubeIndex/black/ring/rare/120-200.html %}
+{% include /cubeIndex/black/ring/epic/120-200.html %}
+{% include /cubeIndex/black/ring/unique/120-200.html %}
+{% include /cubeIndex/black/ring/legendary/120-200.html %}
+
+{% include /cubeIndex/black/pendant/rare/120-200.html %}
+{% include /cubeIndex/black/pendant/epic/120-200.html %}
+{% include /cubeIndex/black/pendant/unique/120-200.html %}
+{% include /cubeIndex/black/pendant/legendary/120-200.html %}
+
+{% include /cubeIndex/black/machineHeart/rare/30.html %}
+{% include /cubeIndex/black/machineHeart/epic/30.html %}
+{% include /cubeIndex/black/machineHeart/unique/30.html %}
+{% include /cubeIndex/black/machineHeart/legendary/30.html %}
+
+{% include /cubeIndex/black/machineHeart/rare/100.html %}
+{% include /cubeIndex/black/machineHeart/epic/100.html %}
+{% include /cubeIndex/black/machineHeart/unique/100.html %}
+{% include /cubeIndex/black/machineHeart/legendary/100.html %}
+
+{% include /cubeIndex/black/machineHeart/rare/120.html %}
+{% include /cubeIndex/black/machineHeart/epic/120.html %}
+{% include /cubeIndex/black/machineHeart/unique/120.html %}
+{% include /cubeIndex/black/machineHeart/legendary/120.html %}
+
+<!-- additional -->
+{% include /cubeIndex/additional/weapon/rare/120-200.html %}
+{% include /cubeIndex/additional/weapon/epic/120-200.html %}
+{% include /cubeIndex/additional/weapon/unique/120-200.html %}
+{% include /cubeIndex/additional/weapon/legendary/120-200.html %}
+
+{% include /cubeIndex/additional/emblem/rare/100.html %}
+{% include /cubeIndex/additional/emblem/epic/100.html %}
+{% include /cubeIndex/additional/emblem/unique/100.html %}
+{% include /cubeIndex/additional/emblem/legendary/100.html %}
+
+{% include /cubeIndex/additional/emblem/rare/120-200.html %}
+{% include /cubeIndex/additional/emblem/epic/120-200.html %}
+{% include /cubeIndex/additional/emblem/unique/120-200.html %}
+{% include /cubeIndex/additional/emblem/legendary/120-200.html %}
+
+{% include /cubeIndex/additional/additionalWeapon/rare/100.html %}
+{% include /cubeIndex/additional/additionalWeapon/epic/100.html %}
+{% include /cubeIndex/additional/additionalWeapon/unique/100.html %}
+{% include /cubeIndex/additional/additionalWeapon/legendary/100.html %}
+
+{% include /cubeIndex/additional/forceshieldSouling/rare/100.html %}
+{% include /cubeIndex/additional/forceshieldSouling/epic/100.html %}
+{% include /cubeIndex/additional/forceshieldSouling/unique/100.html %}
+{% include /cubeIndex/additional/forceshieldSouling/legendary/100.html %}
+
+{% include /cubeIndex/additional/shield/rare/120-200.html %}
+{% include /cubeIndex/additional/shield/epic/120-200.html %}
+{% include /cubeIndex/additional/shield/unique/120-200.html %}
+{% include /cubeIndex/additional/shield/legendary/120-200.html %}
+
+{% include /cubeIndex/additional/hat/rare/120-200.html %}
+{% include /cubeIndex/additional/hat/epic/120-200.html %}
+{% include /cubeIndex/additional/hat/unique/120-200.html %}
+{% include /cubeIndex/additional/hat/legendary/120-200.html %}
+
+{% include /cubeIndex/additional/hat/rare/201-250.html %}
+{% include /cubeIndex/additional/hat/epic/201-250.html %}
+{% include /cubeIndex/additional/hat/unique/201-250.html %}
+{% include /cubeIndex/additional/hat/legendary/201-250.html %}
+
+{% include /cubeIndex/additional/top/rare/120-200.html %}
+{% include /cubeIndex/additional/top/epic/120-200.html %}
+{% include /cubeIndex/additional/top/unique/120-200.html %}
+{% include /cubeIndex/additional/top/legendary/120-200.html %}
+
+{% include /cubeIndex/additional/top/rare/201-250.html %}
+{% include /cubeIndex/additional/top/epic/201-250.html %}
+{% include /cubeIndex/additional/top/unique/201-250.html %}
+{% include /cubeIndex/additional/top/legendary/201-250.html %}
+
+{% include /cubeIndex/additional/dress/rare/120-200.html %}
+{% include /cubeIndex/additional/dress/epic/120-200.html %}
+{% include /cubeIndex/additional/dress/unique/120-200.html %}
+{% include /cubeIndex/additional/dress/legendary/120-200.html %}
+
+{% include /cubeIndex/additional/bottom/rare/120-200.html %}
+{% include /cubeIndex/additional/bottom/epic/120-200.html %}
+{% include /cubeIndex/additional/bottom/unique/120-200.html %}
+{% include /cubeIndex/additional/bottom/legendary/120-200.html %}
+
+{% include /cubeIndex/additional/bottom/rare/201-250.html %}
+{% include /cubeIndex/additional/bottom/epic/201-250.html %}
+{% include /cubeIndex/additional/bottom/unique/201-250.html %}
+{% include /cubeIndex/additional/bottom/legendary/201-250.html %}
+
+{% include /cubeIndex/additional/shoes/rare/120-200.html %}
+{% include /cubeIndex/additional/shoes/epic/120-200.html %}
+{% include /cubeIndex/additional/shoes/unique/120-200.html %}
+{% include /cubeIndex/additional/shoes/legendary/120-200.html %}
+
+{% include /cubeIndex/additional/gloves/rare/120-200.html %}
+{% include /cubeIndex/additional/gloves/epic/120-200.html %}
+{% include /cubeIndex/additional/gloves/unique/120-200.html %}
+{% include /cubeIndex/additional/gloves/legendary/120-200.html %}
+
+{% include /cubeIndex/additional/cloak/rare/120-200.html %}
+{% include /cubeIndex/additional/cloak/epic/120-200.html %}
+{% include /cubeIndex/additional/cloak/unique/120-200.html %}
+{% include /cubeIndex/additional/cloak/legendary/120-200.html %}
+
+{% include /cubeIndex/additional/belt/rare/120-200.html %}
+{% include /cubeIndex/additional/belt/epic/120-200.html %}
+{% include /cubeIndex/additional/belt/unique/120-200.html %}
+{% include /cubeIndex/additional/belt/legendary/120-200.html %}
+
+{% include /cubeIndex/additional/shoulderDecoration/rare/120-200.html %}
+{% include /cubeIndex/additional/shoulderDecoration/epic/120-200.html %}
+{% include /cubeIndex/additional/shoulderDecoration/unique/120-200.html %}
+{% include /cubeIndex/additional/shoulderDecoration/legendary/120-200.html %}
+
+{% include /cubeIndex/additional/faceDecoration/rare/120-200.html %}
+{% include /cubeIndex/additional/faceDecoration/epic/120-200.html %}
+{% include /cubeIndex/additional/faceDecoration/unique/120-200.html %}
+{% include /cubeIndex/additional/faceDecoration/legendary/120-200.html %}
+
+{% include /cubeIndex/additional/eyeDecoration/rare/120-200.html %}
+{% include /cubeIndex/additional/eyeDecoration/epic/120-200.html %}
+{% include /cubeIndex/additional/eyeDecoration/unique/120-200.html %}
+{% include /cubeIndex/additional/eyeDecoration/legendary/120-200.html %}
+
+{% include /cubeIndex/additional/earring/rare/120-200.html %}
+{% include /cubeIndex/additional/earring/epic/120-200.html %}
+{% include /cubeIndex/additional/earring/unique/120-200.html %}
+{% include /cubeIndex/additional/earring/legendary/120-200.html %}
+
+{% include /cubeIndex/additional/ring/rare/120-200.html %}
+{% include /cubeIndex/additional/ring/epic/120-200.html %}
+{% include /cubeIndex/additional/ring/unique/120-200.html %}
+{% include /cubeIndex/additional/ring/legendary/120-200.html %}
+
+{% include /cubeIndex/additional/pendant/rare/120-200.html %}
+{% include /cubeIndex/additional/pendant/epic/120-200.html %}
+{% include /cubeIndex/additional/pendant/unique/120-200.html %}
+{% include /cubeIndex/additional/pendant/legendary/120-200.html %}
+
+{% include /cubeIndex/additional/machineHeart/rare/30.html %}
+{% include /cubeIndex/additional/machineHeart/epic/30.html %}
+{% include /cubeIndex/additional/machineHeart/unique/30.html %}
+{% include /cubeIndex/additional/machineHeart/legendary/30.html %}
+
+{% include /cubeIndex/additional/machineHeart/rare/100.html %}
+{% include /cubeIndex/additional/machineHeart/epic/100.html %}
+{% include /cubeIndex/additional/machineHeart/unique/100.html %}
+{% include /cubeIndex/additional/machineHeart/legendary/100.html %}
+
+{% include /cubeIndex/additional/machineHeart/rare/120.html %}
+{% include /cubeIndex/additional/machineHeart/epic/120.html %}
+{% include /cubeIndex/additional/machineHeart/unique/120.html %}
+{% include /cubeIndex/additional/machineHeart/legendary/120.html %}
+
+<!-- expert -->
+{% include /cubeIndex/expert/weapon/rare/120-200.html %}
+{% include /cubeIndex/expert/weapon/epic/120-200.html %}
+{% include /cubeIndex/expert/weapon/unique/120-200.html %}
+{% include /cubeIndex/expert/weapon/legendary/120-200.html %}
+
+{% include /cubeIndex/expert/emblem/rare/100.html %}
+{% include /cubeIndex/expert/emblem/epic/100.html %}
+{% include /cubeIndex/expert/emblem/unique/100.html %}
+{% include /cubeIndex/expert/emblem/legendary/100.html %}
+
+{% include /cubeIndex/expert/emblem/rare/120-200.html %}
+{% include /cubeIndex/expert/emblem/epic/120-200.html %}
+{% include /cubeIndex/expert/emblem/unique/120-200.html %}
+{% include /cubeIndex/expert/emblem/legendary/120-200.html %}
+
+{% include /cubeIndex/expert/additionalWeapon/rare/100.html %}
+{% include /cubeIndex/expert/additionalWeapon/epic/100.html %}
+{% include /cubeIndex/expert/additionalWeapon/unique/100.html %}
+{% include /cubeIndex/expert/additionalWeapon/legendary/100.html %}
+
+{% include /cubeIndex/expert/forceshieldSouling/rare/100.html %}
+{% include /cubeIndex/expert/forceshieldSouling/epic/100.html %}
+{% include /cubeIndex/expert/forceshieldSouling/unique/100.html %}
+{% include /cubeIndex/expert/forceshieldSouling/legendary/100.html %}
+
+{% include /cubeIndex/expert/shield/rare/120-200.html %}
+{% include /cubeIndex/expert/shield/epic/120-200.html %}
+{% include /cubeIndex/expert/shield/unique/120-200.html %}
+{% include /cubeIndex/expert/shield/legendary/120-200.html %}
+
+{% include /cubeIndex/expert/hat/rare/120-200.html %}
+{% include /cubeIndex/expert/hat/epic/120-200.html %}
+{% include /cubeIndex/expert/hat/unique/120-200.html %}
+{% include /cubeIndex/expert/hat/legendary/120-200.html %}
+
+{% include /cubeIndex/expert/hat/rare/201-250.html %}
+{% include /cubeIndex/expert/hat/epic/201-250.html %}
+{% include /cubeIndex/expert/hat/unique/201-250.html %}
+{% include /cubeIndex/expert/hat/legendary/201-250.html %}
+
+{% include /cubeIndex/expert/top/rare/120-200.html %}
+{% include /cubeIndex/expert/top/epic/120-200.html %}
+{% include /cubeIndex/expert/top/unique/120-200.html %}
+{% include /cubeIndex/expert/top/legendary/120-200.html %}
+
+{% include /cubeIndex/expert/top/rare/201-250.html %}
+{% include /cubeIndex/expert/top/epic/201-250.html %}
+{% include /cubeIndex/expert/top/unique/201-250.html %}
+{% include /cubeIndex/expert/top/legendary/201-250.html %}
+
+{% include /cubeIndex/expert/dress/rare/120-200.html %}
+{% include /cubeIndex/expert/dress/epic/120-200.html %}
+{% include /cubeIndex/expert/dress/unique/120-200.html %}
+{% include /cubeIndex/expert/dress/legendary/120-200.html %}
+
+{% include /cubeIndex/expert/bottom/rare/120-200.html %}
+{% include /cubeIndex/expert/bottom/epic/120-200.html %}
+{% include /cubeIndex/expert/bottom/unique/120-200.html %}
+{% include /cubeIndex/expert/bottom/legendary/120-200.html %}
+
+{% include /cubeIndex/expert/bottom/rare/201-250.html %}
+{% include /cubeIndex/expert/bottom/epic/201-250.html %}
+{% include /cubeIndex/expert/bottom/unique/201-250.html %}
+{% include /cubeIndex/expert/bottom/legendary/201-250.html %}
+
+{% include /cubeIndex/expert/shoes/rare/120-200.html %}
+{% include /cubeIndex/expert/shoes/epic/120-200.html %}
+{% include /cubeIndex/expert/shoes/unique/120-200.html %}
+{% include /cubeIndex/expert/shoes/legendary/120-200.html %}
+
+{% include /cubeIndex/expert/gloves/rare/120-200.html %}
+{% include /cubeIndex/expert/gloves/epic/120-200.html %}
+{% include /cubeIndex/expert/gloves/unique/120-200.html %}
+{% include /cubeIndex/expert/gloves/legendary/120-200.html %}
+
+{% include /cubeIndex/expert/cloak/rare/120-200.html %}
+{% include /cubeIndex/expert/cloak/epic/120-200.html %}
+{% include /cubeIndex/expert/cloak/unique/120-200.html %}
+{% include /cubeIndex/expert/cloak/legendary/120-200.html %}
+
+{% include /cubeIndex/expert/belt/rare/120-200.html %}
+{% include /cubeIndex/expert/belt/epic/120-200.html %}
+{% include /cubeIndex/expert/belt/unique/120-200.html %}
+{% include /cubeIndex/expert/belt/legendary/120-200.html %}
+
+{% include /cubeIndex/expert/shoulderDecoration/rare/120-200.html %}
+{% include /cubeIndex/expert/shoulderDecoration/epic/120-200.html %}
+{% include /cubeIndex/expert/shoulderDecoration/unique/120-200.html %}
+{% include /cubeIndex/expert/shoulderDecoration/legendary/120-200.html %}
+
+{% include /cubeIndex/expert/faceDecoration/rare/120-200.html %}
+{% include /cubeIndex/expert/faceDecoration/epic/120-200.html %}
+{% include /cubeIndex/expert/faceDecoration/unique/120-200.html %}
+{% include /cubeIndex/expert/faceDecoration/legendary/120-200.html %}
+
+{% include /cubeIndex/expert/eyeDecoration/rare/120-200.html %}
+{% include /cubeIndex/expert/eyeDecoration/epic/120-200.html %}
+{% include /cubeIndex/expert/eyeDecoration/unique/120-200.html %}
+{% include /cubeIndex/expert/eyeDecoration/legendary/120-200.html %}
+
+{% include /cubeIndex/expert/earring/rare/120-200.html %}
+{% include /cubeIndex/expert/earring/epic/120-200.html %}
+{% include /cubeIndex/expert/earring/unique/120-200.html %}
+{% include /cubeIndex/expert/earring/legendary/120-200.html %}
+
+{% include /cubeIndex/expert/ring/rare/120-200.html %}
+{% include /cubeIndex/expert/ring/epic/120-200.html %}
+{% include /cubeIndex/expert/ring/unique/120-200.html %}
+{% include /cubeIndex/expert/ring/legendary/120-200.html %}
+
+{% include /cubeIndex/expert/pendant/rare/120-200.html %}
+{% include /cubeIndex/expert/pendant/epic/120-200.html %}
+{% include /cubeIndex/expert/pendant/unique/120-200.html %}
+{% include /cubeIndex/expert/pendant/legendary/120-200.html %}
+
+{% include /cubeIndex/expert/machineHeart/rare/30.html %}
+{% include /cubeIndex/expert/machineHeart/epic/30.html %}
+{% include /cubeIndex/expert/machineHeart/unique/30.html %}
+{% include /cubeIndex/expert/machineHeart/legendary/30.html %}
+
+{% include /cubeIndex/expert/machineHeart/rare/100.html %}
+{% include /cubeIndex/expert/machineHeart/epic/100.html %}
+{% include /cubeIndex/expert/machineHeart/unique/100.html %}
+{% include /cubeIndex/expert/machineHeart/legendary/100.html %}
+
+{% include /cubeIndex/expert/machineHeart/rare/120.html %}
+{% include /cubeIndex/expert/machineHeart/epic/120.html %}
+{% include /cubeIndex/expert/machineHeart/unique/120.html %}
+{% include /cubeIndex/expert/machineHeart/legendary/120.html %}
+
+<!-- master -->
+{% include /cubeIndex/master/weapon/rare/120-200.html %}
+{% include /cubeIndex/master/weapon/epic/120-200.html %}
+{% include /cubeIndex/master/weapon/unique/120-200.html %}
+{% include /cubeIndex/master/weapon/legendary/120-200.html %}
+
+{% include /cubeIndex/master/emblem/rare/100.html %}
+{% include /cubeIndex/master/emblem/epic/100.html %}
+{% include /cubeIndex/master/emblem/unique/100.html %}
+{% include /cubeIndex/master/emblem/legendary/100.html %}
+
+{% include /cubeIndex/master/emblem/rare/120-200.html %}
+{% include /cubeIndex/master/emblem/epic/120-200.html %}
+{% include /cubeIndex/master/emblem/unique/120-200.html %}
+{% include /cubeIndex/master/emblem/legendary/120-200.html %}
+
+{% include /cubeIndex/master/additionalWeapon/rare/100.html %}
+{% include /cubeIndex/master/additionalWeapon/epic/100.html %}
+{% include /cubeIndex/master/additionalWeapon/unique/100.html %}
+{% include /cubeIndex/master/additionalWeapon/legendary/100.html %}
+
+{% include /cubeIndex/master/forceshieldSouling/rare/100.html %}
+{% include /cubeIndex/master/forceshieldSouling/epic/100.html %}
+{% include /cubeIndex/master/forceshieldSouling/unique/100.html %}
+{% include /cubeIndex/master/forceshieldSouling/legendary/100.html %}
+
+{% include /cubeIndex/master/shield/rare/120-200.html %}
+{% include /cubeIndex/master/shield/epic/120-200.html %}
+{% include /cubeIndex/master/shield/unique/120-200.html %}
+{% include /cubeIndex/master/shield/legendary/120-200.html %}
+
+{% include /cubeIndex/master/hat/rare/120-200.html %}
+{% include /cubeIndex/master/hat/epic/120-200.html %}
+{% include /cubeIndex/master/hat/unique/120-200.html %}
+{% include /cubeIndex/master/hat/legendary/120-200.html %}
+
+{% include /cubeIndex/master/hat/rare/201-250.html %}
+{% include /cubeIndex/master/hat/epic/201-250.html %}
+{% include /cubeIndex/master/hat/unique/201-250.html %}
+{% include /cubeIndex/master/hat/legendary/201-250.html %}
+
+{% include /cubeIndex/master/top/rare/120-200.html %}
+{% include /cubeIndex/master/top/epic/120-200.html %}
+{% include /cubeIndex/master/top/unique/120-200.html %}
+{% include /cubeIndex/master/top/legendary/120-200.html %}
+
+{% include /cubeIndex/master/top/rare/201-250.html %}
+{% include /cubeIndex/master/top/epic/201-250.html %}
+{% include /cubeIndex/master/top/unique/201-250.html %}
+{% include /cubeIndex/master/top/legendary/201-250.html %}
+
+{% include /cubeIndex/master/dress/rare/120-200.html %}
+{% include /cubeIndex/master/dress/epic/120-200.html %}
+{% include /cubeIndex/master/dress/unique/120-200.html %}
+{% include /cubeIndex/master/dress/legendary/120-200.html %}
+
+{% include /cubeIndex/master/bottom/rare/120-200.html %}
+{% include /cubeIndex/master/bottom/epic/120-200.html %}
+{% include /cubeIndex/master/bottom/unique/120-200.html %}
+{% include /cubeIndex/master/bottom/legendary/120-200.html %}
+
+{% include /cubeIndex/master/bottom/rare/201-250.html %}
+{% include /cubeIndex/master/bottom/epic/201-250.html %}
+{% include /cubeIndex/master/bottom/unique/201-250.html %}
+{% include /cubeIndex/master/bottom/legendary/201-250.html %}
+
+{% include /cubeIndex/master/shoes/rare/120-200.html %}
+{% include /cubeIndex/master/shoes/epic/120-200.html %}
+{% include /cubeIndex/master/shoes/unique/120-200.html %}
+{% include /cubeIndex/master/shoes/legendary/120-200.html %}
+
+{% include /cubeIndex/master/gloves/rare/120-200.html %}
+{% include /cubeIndex/master/gloves/epic/120-200.html %}
+{% include /cubeIndex/master/gloves/unique/120-200.html %}
+{% include /cubeIndex/master/gloves/legendary/120-200.html %}
+
+{% include /cubeIndex/master/cloak/rare/120-200.html %}
+{% include /cubeIndex/master/cloak/epic/120-200.html %}
+{% include /cubeIndex/master/cloak/unique/120-200.html %}
+{% include /cubeIndex/master/cloak/legendary/120-200.html %}
+
+{% include /cubeIndex/master/belt/rare/120-200.html %}
+{% include /cubeIndex/master/belt/epic/120-200.html %}
+{% include /cubeIndex/master/belt/unique/120-200.html %}
+{% include /cubeIndex/master/belt/legendary/120-200.html %}
+
+{% include /cubeIndex/master/shoulderDecoration/rare/120-200.html %}
+{% include /cubeIndex/master/shoulderDecoration/epic/120-200.html %}
+{% include /cubeIndex/master/shoulderDecoration/unique/120-200.html %}
+{% include /cubeIndex/master/shoulderDecoration/legendary/120-200.html %}
+
+{% include /cubeIndex/master/faceDecoration/rare/120-200.html %}
+{% include /cubeIndex/master/faceDecoration/epic/120-200.html %}
+{% include /cubeIndex/master/faceDecoration/unique/120-200.html %}
+{% include /cubeIndex/master/faceDecoration/legendary/120-200.html %}
+
+{% include /cubeIndex/master/eyeDecoration/rare/120-200.html %}
+{% include /cubeIndex/master/eyeDecoration/epic/120-200.html %}
+{% include /cubeIndex/master/eyeDecoration/unique/120-200.html %}
+{% include /cubeIndex/master/eyeDecoration/legendary/120-200.html %}
+
+{% include /cubeIndex/master/earring/rare/120-200.html %}
+{% include /cubeIndex/master/earring/epic/120-200.html %}
+{% include /cubeIndex/master/earring/unique/120-200.html %}
+{% include /cubeIndex/master/earring/legendary/120-200.html %}
+
+{% include /cubeIndex/master/ring/rare/120-200.html %}
+{% include /cubeIndex/master/ring/epic/120-200.html %}
+{% include /cubeIndex/master/ring/unique/120-200.html %}
+{% include /cubeIndex/master/ring/legendary/120-200.html %}
+
+{% include /cubeIndex/master/pendant/rare/120-200.html %}
+{% include /cubeIndex/master/pendant/epic/120-200.html %}
+{% include /cubeIndex/master/pendant/unique/120-200.html %}
+{% include /cubeIndex/master/pendant/legendary/120-200.html %}
+
+{% include /cubeIndex/master/machineHeart/rare/30.html %}
+{% include /cubeIndex/master/machineHeart/epic/30.html %}
+{% include /cubeIndex/master/machineHeart/unique/30.html %}
+{% include /cubeIndex/master/machineHeart/legendary/30.html %}
+
+{% include /cubeIndex/master/machineHeart/rare/100.html %}
+{% include /cubeIndex/master/machineHeart/epic/100.html %}
+{% include /cubeIndex/master/machineHeart/unique/100.html %}
+{% include /cubeIndex/master/machineHeart/legendary/100.html %}
+
+{% include /cubeIndex/master/machineHeart/rare/120.html %}
+{% include /cubeIndex/master/machineHeart/epic/120.html %}
+{% include /cubeIndex/master/machineHeart/unique/120.html %}
+{% include /cubeIndex/master/machineHeart/legendary/120.html %}
+
+<!-- questionable -->
+{% include /cubeIndex/questionable/weapon/rare/120-200.html %}
+{% include /cubeIndex/questionable/weapon/epic/120-200.html %}
+{% include /cubeIndex/questionable/weapon/unique/120-200.html %}
+{% include /cubeIndex/questionable/weapon/legendary/120-200.html %}
+
+{% include /cubeIndex/questionable/emblem/rare/100.html %}
+{% include /cubeIndex/questionable/emblem/epic/100.html %}
+{% include /cubeIndex/questionable/emblem/unique/100.html %}
+{% include /cubeIndex/questionable/emblem/legendary/100.html %}
+
+{% include /cubeIndex/questionable/emblem/rare/120-200.html %}
+{% include /cubeIndex/questionable/emblem/epic/120-200.html %}
+{% include /cubeIndex/questionable/emblem/unique/120-200.html %}
+{% include /cubeIndex/questionable/emblem/legendary/120-200.html %}
+
+{% include /cubeIndex/questionable/additionalWeapon/rare/100.html %}
+{% include /cubeIndex/questionable/additionalWeapon/epic/100.html %}
+{% include /cubeIndex/questionable/additionalWeapon/unique/100.html %}
+{% include /cubeIndex/questionable/additionalWeapon/legendary/100.html %}
+
+{% include /cubeIndex/questionable/forceshieldSouling/rare/100.html %}
+{% include /cubeIndex/questionable/forceshieldSouling/epic/100.html %}
+{% include /cubeIndex/questionable/forceshieldSouling/unique/100.html %}
+{% include /cubeIndex/questionable/forceshieldSouling/legendary/100.html %}
+
+{% include /cubeIndex/questionable/shield/rare/120-200.html %}
+{% include /cubeIndex/questionable/shield/epic/120-200.html %}
+{% include /cubeIndex/questionable/shield/unique/120-200.html %}
+{% include /cubeIndex/questionable/shield/legendary/120-200.html %}
+
+{% include /cubeIndex/questionable/hat/rare/120-200.html %}
+{% include /cubeIndex/questionable/hat/epic/120-200.html %}
+{% include /cubeIndex/questionable/hat/unique/120-200.html %}
+{% include /cubeIndex/questionable/hat/legendary/120-200.html %}
+
+{% include /cubeIndex/questionable/hat/rare/201-250.html %}
+{% include /cubeIndex/questionable/hat/epic/201-250.html %}
+{% include /cubeIndex/questionable/hat/unique/201-250.html %}
+{% include /cubeIndex/questionable/hat/legendary/201-250.html %}
+
+{% include /cubeIndex/questionable/top/rare/120-200.html %}
+{% include /cubeIndex/questionable/top/epic/120-200.html %}
+{% include /cubeIndex/questionable/top/unique/120-200.html %}
+{% include /cubeIndex/questionable/top/legendary/120-200.html %}
+
+{% include /cubeIndex/questionable/top/rare/201-250.html %}
+{% include /cubeIndex/questionable/top/epic/201-250.html %}
+{% include /cubeIndex/questionable/top/unique/201-250.html %}
+{% include /cubeIndex/questionable/top/legendary/201-250.html %}
+
+{% include /cubeIndex/questionable/dress/rare/120-200.html %}
+{% include /cubeIndex/questionable/dress/epic/120-200.html %}
+{% include /cubeIndex/questionable/dress/unique/120-200.html %}
+{% include /cubeIndex/questionable/dress/legendary/120-200.html %}
+
+{% include /cubeIndex/questionable/bottom/rare/120-200.html %}
+{% include /cubeIndex/questionable/bottom/epic/120-200.html %}
+{% include /cubeIndex/questionable/bottom/unique/120-200.html %}
+{% include /cubeIndex/questionable/bottom/legendary/120-200.html %}
+
+{% include /cubeIndex/questionable/bottom/rare/201-250.html %}
+{% include /cubeIndex/questionable/bottom/epic/201-250.html %}
+{% include /cubeIndex/questionable/bottom/unique/201-250.html %}
+{% include /cubeIndex/questionable/bottom/legendary/201-250.html %}
+
+{% include /cubeIndex/questionable/shoes/rare/120-200.html %}
+{% include /cubeIndex/questionable/shoes/epic/120-200.html %}
+{% include /cubeIndex/questionable/shoes/unique/120-200.html %}
+{% include /cubeIndex/questionable/shoes/legendary/120-200.html %}
+
+{% include /cubeIndex/questionable/gloves/rare/120-200.html %}
+{% include /cubeIndex/questionable/gloves/epic/120-200.html %}
+{% include /cubeIndex/questionable/gloves/unique/120-200.html %}
+{% include /cubeIndex/questionable/gloves/legendary/120-200.html %}
+
+{% include /cubeIndex/questionable/cloak/rare/120-200.html %}
+{% include /cubeIndex/questionable/cloak/epic/120-200.html %}
+{% include /cubeIndex/questionable/cloak/unique/120-200.html %}
+{% include /cubeIndex/questionable/cloak/legendary/120-200.html %}
+
+{% include /cubeIndex/questionable/belt/rare/120-200.html %}
+{% include /cubeIndex/questionable/belt/epic/120-200.html %}
+{% include /cubeIndex/questionable/belt/unique/120-200.html %}
+{% include /cubeIndex/questionable/belt/legendary/120-200.html %}
+
+{% include /cubeIndex/questionable/shoulderDecoration/rare/120-200.html %}
+{% include /cubeIndex/questionable/shoulderDecoration/epic/120-200.html %}
+{% include /cubeIndex/questionable/shoulderDecoration/unique/120-200.html %}
+{% include /cubeIndex/questionable/shoulderDecoration/legendary/120-200.html %}
+
+{% include /cubeIndex/questionable/faceDecoration/rare/120-200.html %}
+{% include /cubeIndex/questionable/faceDecoration/epic/120-200.html %}
+{% include /cubeIndex/questionable/faceDecoration/unique/120-200.html %}
+{% include /cubeIndex/questionable/faceDecoration/legendary/120-200.html %}
+
+{% include /cubeIndex/questionable/eyeDecoration/rare/120-200.html %}
+{% include /cubeIndex/questionable/eyeDecoration/epic/120-200.html %}
+{% include /cubeIndex/questionable/eyeDecoration/unique/120-200.html %}
+{% include /cubeIndex/questionable/eyeDecoration/legendary/120-200.html %}
+
+{% include /cubeIndex/questionable/earring/rare/120-200.html %}
+{% include /cubeIndex/questionable/earring/epic/120-200.html %}
+{% include /cubeIndex/questionable/earring/unique/120-200.html %}
+{% include /cubeIndex/questionable/earring/legendary/120-200.html %}
+
+{% include /cubeIndex/questionable/ring/rare/120-200.html %}
+{% include /cubeIndex/questionable/ring/epic/120-200.html %}
+{% include /cubeIndex/questionable/ring/unique/120-200.html %}
+{% include /cubeIndex/questionable/ring/legendary/120-200.html %}
+
+{% include /cubeIndex/questionable/pendant/rare/120-200.html %}
+{% include /cubeIndex/questionable/pendant/epic/120-200.html %}
+{% include /cubeIndex/questionable/pendant/unique/120-200.html %}
+{% include /cubeIndex/questionable/pendant/legendary/120-200.html %}
+
+{% include /cubeIndex/questionable/machineHeart/rare/30.html %}
+{% include /cubeIndex/questionable/machineHeart/epic/30.html %}
+{% include /cubeIndex/questionable/machineHeart/unique/30.html %}
+{% include /cubeIndex/questionable/machineHeart/legendary/30.html %}
+
+{% include /cubeIndex/questionable/machineHeart/rare/100.html %}
+{% include /cubeIndex/questionable/machineHeart/epic/100.html %}
+{% include /cubeIndex/questionable/machineHeart/unique/100.html %}
+{% include /cubeIndex/questionable/machineHeart/legendary/100.html %}
+
+{% include /cubeIndex/questionable/machineHeart/rare/120.html %}
+{% include /cubeIndex/questionable/machineHeart/epic/120.html %}
+{% include /cubeIndex/questionable/machineHeart/unique/120.html %}
+{% include /cubeIndex/questionable/machineHeart/legendary/120.html %}
+</div>
+</body>
+
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<script>
+	var rankSelector = document.querySelector('#rank');
+	var cubeSelector = document.querySelector('#cubeSelector');
+	var equipmentSelector = document.querySelector('#equipment');
+	var levelSelector = document.querySelector('#level');
+	var s1 = document.querySelector('#s1');
+	var s2 = document.querySelector('#s2');
+	var s3 = document.querySelector('#s3');
+
+	var chart;
+
+	var s2AllPer,s3AllPer;
+	/* type 1 */
+	var s2PerCheckOptionSkill = 0;
+
+	var s2PerCheckOptionAfterBeingHit = 0;
+
+	/* type 1 */
+	var s3PerCheckOptionSkill = 0;
+
+	var s3PerCheckOptionAfterBeingHit = 0;
+
+	/* type 2 */
+	var s3PerCheckOptionIgnoreDefense = 0;
+
+	var s3PerCheckOptionBossAttackDamage = 0;
+
+	var s3PerCheckOptionIgnoreDamageWhenHit = 0;
+
+	var s3PerCheckOptionInvincibleWhenHit = 0;
+
+	var s3PerCheckOptionItemDrop = 0;
+
+
+	{% include /cubeIndex/cubeData.html %}
+
+	{% include /cubeIndex/cubeValue.html %}
+
+	changeRankSelector();
+
+	function changeRankSelector(){
+		var rankValue = rankSelector.options[rankSelector.selectedIndex].value;
+
+		if(rankValue == 'rare' || rankValue == 'epic'){
+			cubeSelector.options[5].disabled = false;//수상
+			cubeSelector.options[3].disabled = false;//장인
+		}
+		else if(rankValue == 'unique'){
+			if(cubeSelector.options[cubeSelector.selectedIndex].value == 'questionable'){
+				cubeSelector.options[cubeSelector.selectedIndex].selected = '';
+			}
+			cubeSelector.options[3].disabled = false;
+			cubeSelector.options[5].disabled = true;
+		}
+		else if(rankValue == 'legendary'){
+			if(cubeSelector.options[cubeSelector.selectedIndex].value == 'expert'){
+				cubeSelector.options[cubeSelector.selectedIndex].selected = '';
+			}
+			cubeSelector.options[3].disabled = true;
+			cubeSelector.options[5].disabled = true;
+		}
+
+		changeCubeSelector();
+	}
+	function changeCubeSelector(){
+		console.log('changeCubeSelector');
+
+		var cubeSelectorValue = cubeSelector.options[cubeSelector.selectedIndex].value;
+
+		changeEquipmentSelector();
+	}
+	function changeEquipmentSelector(){
+		console.log('changeEquipmentSelector');
+		changeLevelSelector();
+	}
+	function changeLevelSelector(){
+		console.log('changeLevelSelector');
+
+		var equipmentValue = equipmentSelector.options[equipmentSelector.selectedIndex].value;
+
+		levelSelector.options.length = 0;
+
+		if(equipmentValue == 'hat' || equipmentValue == 'top' || equipmentValue == 'bottom'){
+			var objOption = document.createElement('option');
+			objOption.text = '120-200';
+			levelSelector.options.add(objOption);
+			
+			var objOption = document.createElement('option');			
+			objOption.text = '201-250';
+			levelSelector.options.add(objOption);
+		}
+		else if(equipmentValue == 'machineHeart'){
+			var objOption = document.createElement('option');
+			objOption.text = '30';
+			levelSelector.options.add(objOption);
+
+			var objOption = document.createElement('option');
+			objOption.text = '100';
+			levelSelector.options.add(objOption);
+
+			var objOption = document.createElement('option');
+			objOption.text = '120';
+			levelSelector.options.add(objOption);
+		}
+		else if(equipmentValue == 'additionalWeapon' || equipmentValue == 'forceshieldSouling'){
+			var objOption = document.createElement('option');
+			objOption.text = '100';
+			levelSelector.options.add(objOption);
+		}
+		else if(equipmentValue == 'emblem'){
+			var objOption = document.createElement('option');
+			objOption.text = '100';
+			levelSelector.options.add(objOption);
+
+			var objOption = document.createElement('option');
+			objOption.text = '120-200';
+			levelSelector.options.add(objOption);
+		}
+		else{
+			var objOption = document.createElement('option');
+			objOption.text = '120-200';
+			levelSelector.options.add(objOption);
+		}
+		changeSelector();
+	}
+	function changeSelector(){
+		console.log('changeSelector');
+		var rankValue = rankSelector.options[rankSelector.selectedIndex].value;
+		var cubeValue = cubeSelector.options[cubeSelector.selectedIndex].value;
+		var equipmentValue = equipmentSelector.options[equipmentSelector.selectedIndex].value;
+		var levelValue = levelSelector.options[levelSelector.selectedIndex].value;
+
+	
+		s1.options.length = 0;
+		s2.options.length = 0;
+		s3.options.length = 0;
+
+		if(rankValue == 'rare'){
+			{% include /cubeIndex/changeSelector/rareRed.html %}
+			{% include /cubeIndex/changeSelector/rareBlack.html %}
+			{% include /cubeIndex/changeSelector/rareAdditional.html %}
+			{% include /cubeIndex/changeSelector/rareExpert.html %}
+			{% include /cubeIndex/changeSelector/rareMaster.html %}
+			{% include /cubeIndex/changeSelector/rareQuestionable.html %}
+		}
+		else if(rankValue == 'epic'){
+			{% include /cubeIndex/changeSelector/epicRed.html %}
+			{% include /cubeIndex/changeSelector/epicBlack.html %}
+			{% include /cubeIndex/changeSelector/epicAdditional.html %}
+			{% include /cubeIndex/changeSelector/epicExpert.html %}
+			{% include /cubeIndex/changeSelector/epicMaster.html %}
+			{% include /cubeIndex/changeSelector/epicQuestionable.html %}
+		}
+		else if(rankValue == 'unique'){
+			{% include /cubeIndex/changeSelector/uniqueRed.html %}
+			{% include /cubeIndex/changeSelector/uniqueBlack.html %}
+			{% include /cubeIndex/changeSelector/uniqueAdditional.html %}
+			{% include /cubeIndex/changeSelector/uniqueExpert.html %}
+			{% include /cubeIndex/changeSelector/uniqueMaster.html %}
+		}
+		else if(rankValue == 'legendary'){
+			{% include /cubeIndex/changeSelector/legendaryRed.html %}
+			{% include /cubeIndex/changeSelector/legendaryBlack.html %}
+			{% include /cubeIndex/changeSelector/legendaryAdditional.html %}
+			{% include /cubeIndex/changeSelector/legendaryMaster.html %}
+		}
+	}
+
+	function calculateFunction(){
+		s2s3PerInit();
+		var per1 = document.querySelector('#p1');
+		var per2 = document.querySelector('#p2');
+		var per3 = document.querySelector('#p3');
+
+		var resultText = document.querySelector('#resultText');
+
+		var s1Value = s1.options[s1.selectedIndex].value;
+		var s2Value = s2.options[s2.selectedIndex].value;
+		var s3Value = s3.options[s3.selectedIndex].value;
+		
+		var s1Index = s1.selectedIndex;
+		var s2Index = s2.selectedIndex;
+		var s3Index = s3.selectedIndex;
+
+		var s1Check = document.querySelector('#s1Check');
+		var s2Check = document.querySelector('#s2Check');
+		var s3Check = document.querySelector('#s3Check');
+
+		var s1Per,s2Per,s3Per;
+
+		var rankValue = rankSelector.options[rankSelector.selectedIndex].value;
+		var cubeValue = cubeSelector.options[cubeSelector.selectedIndex].value;
+		var equipmentValue = equipmentSelector.options[equipmentSelector.selectedIndex].value;
+		var levelValue = levelSelector.options[levelSelector.selectedIndex].value;
+
+		if(rankValue == 'rare'){
+			{% include /cubeIndex/extractionPercentage/rareRed.html %}
+			{% include /cubeIndex/extractionPercentage/rareBlack.html %}
+			{% include /cubeIndex/extractionPercentage/rareAdditional.html %}
+			{% include /cubeIndex/extractionPercentage/rareExpert.html %}
+			{% include /cubeIndex/extractionPercentage/rareMaster.html %}
+			{% include /cubeIndex/extractionPercentage/rareQuestionable.html %}
+		}
+		else if(rankValue == 'epic'){
+			{% include /cubeIndex/extractionPercentage/epicRed.html %}
+			{% include /cubeIndex/extractionPercentage/epicBlack.html %}
+			{% include /cubeIndex/extractionPercentage/epicAdditional.html %}
+			{% include /cubeIndex/extractionPercentage/epicExpert.html %}
+			{% include /cubeIndex/extractionPercentage/epicMaster.html %}
+			{% include /cubeIndex/extractionPercentage/epicQuestionable.html %}
+		}
+		else if(rankValue == 'unique'){
+			{% include /cubeIndex/extractionPercentage/uniqueRed.html %}
+			{% include /cubeIndex/extractionPercentage/uniqueBlack.html %}
+			{% include /cubeIndex/extractionPercentage/uniqueAdditional.html %}
+			{% include /cubeIndex/extractionPercentage/uniqueExpert.html %}
+			{% include /cubeIndex/extractionPercentage/uniqueMaster.html %}
+		}
+		else if(rankValue == 'legendary'){
+			{% include /cubeIndex/extractionPercentage/legendaryRed.html %}
+			{% include /cubeIndex/extractionPercentage/legendaryBlack.html %}
+			{% include /cubeIndex/extractionPercentage/legendaryAdditional.html %}
+			{% include /cubeIndex/extractionPercentage/legendaryMaster.html %}
+		}
+
+		{% include checkOption.html %}
+	
+		{% include makeChart.html %}
+
+		{% include resultText.html %}
+		
+		
+	}
+
+	{% include overlapOptionCheck.html %}
+
+	{% include s2s3PerInit.html %}	
+
+</script>
+
+</html>

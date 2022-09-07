@@ -1,0 +1,27 @@
+---
+
+port: 4000
+host: 0.0.0.0
+safe: false
+
+
+### site serving configuration ###
+exclude: [CNAME, README.md, .gitignore]
+permalink: /:title ## disables post output
+timezone: null
+lsi: false
+markdown: kramdown
+
+
+### content configuration ###
+title:       "메이플 큐브 기댓값 계산기"
+keywords:    "메이플스토리,메이플,메이플 큐브,메이플 큐브 확률,메이플 큐브 확률,메이플 기댓값,메이플 큐브 기댓값,메이플 잠재능력, 메이플 잠재"
+description: "메이플스토리 공개된 큐브 잠재능력 옵션 확률을 통해 각종 큐브 잠재능력 옵션 기댓값을 계산합니다."
+source_link: "https://atomic0x90.github.io/"
+favicon:     "/img/cube-outline.svg"
+touch_icon:  "/img/cube-outline.svg"
+
+
+kramdown:
+  auto_ids:  false
+

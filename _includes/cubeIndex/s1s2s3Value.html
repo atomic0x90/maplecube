@@ -1,0 +1,140 @@
+if(!s1Check.checked){
+		if(s1Value == '<쓸만한 어드밴스드 블레스> 스킬 사용 가능'||
+		s1Value == '<쓸만한 미스틱 도어> 스킬 사용 가능'||
+		s1Value == '<쓸만한 하이퍼 바디> 스킬 사용 가능'||
+		s1Value == '<쓸만한 컴뱃 오더스> 스킬 사용 가능'||
+		s1Value == '<쓸만한 윈드 부스터> 스킬 사용 가능'||
+		s1Value == '<쓸만한 샤프 아이즈> 스킬 사용 가능'){
+			checkOptionType[0] = 1;
+			checkOptionSkill++;
+		}
+		else if(s1Value == '피격 후 무적시간 : +3초'||
+		s1Value == '피격 후 무적시간 : +2초'||
+		s1Value == '피격 후 무적시간 : +1초'){
+			checkOptionType[0] = 1;
+			checkOptionAfterBeingHit++;
+		}
+		else if(s1Value == '몬스터 방어율 무시 : +40%'||
+		s1Value == '몬스터 방어율 무시 : +35%'||
+		s1Value == '몬스터 방어율 무시 : +30%'||
+		s1Value == '몬스터 방어율 무시 : +15%'){
+			checkOptionType[0] = 2;
+			checkOptionIgnoreDefense++;
+		}
+		else if(s1Value == '보스 몬스터 공격 시 데미지 : +40%'||
+		s1Value == '보스 몬스터 공격 시 데미지 : +35%'||
+		s1Value == '보스 몬스터 공격 시 데미지 : +30%'){
+			checkOptionType[0] = 2;
+			checkOptionBossAttackDamage++;
+		}
+		else if(s1Value == '피격 시 10% 확률로 데미지의 20% 무시'||
+		s1Value == '피격 시 10% 확률로 데미지의 40% 무시'||
+		s1Value == '피격 시 5% 확률로 데미지의 20% 무시'||
+		s1Value == '피격 시 5% 확률로 데미지의 40% 무시'){
+			checkOptionType[0] = 2;
+			checkOptionIgnoreDamageWhenHit++;
+		}
+		else if(s1Value == '피격 시 4% 확률로 7초간 무적'||
+		s1Value == '피격 시 2% 확률로 7초간 무적'){
+			checkOptionType[0] = 2;
+			checkOptionInvincibleWhenHit++;
+		}
+		else if(s1Value == '아이템 드롭률 : +20%'){
+			checkOptionType[0] = 2;
+			checkOptionItemDrop++;
+		}
+}
+
+if(!s2Check.checked){
+		if(s2Value == '<쓸만한 어드밴스드 블레스> 스킬 사용 가능'||
+		s2Value == '<쓸만한 미스틱 도어> 스킬 사용 가능'||
+		s2Value == '<쓸만한 하이퍼 바디> 스킬 사용 가능'||
+		s2Value == '<쓸만한 컴뱃 오더스> 스킬 사용 가능'||
+		s2Value == '<쓸만한 윈드 부스터> 스킬 사용 가능'||
+		s2Value == '<쓸만한 샤프 아이즈> 스킬 사용 가능'){
+			checkOptionType[1] = 1;
+			checkOptionSkill++;
+		}
+		else if(s2Value == '피격 후 무적시간 : +3초'||
+		s2Value == '피격 후 무적시간 : +2초'||
+		s2Value == '피격 후 무적시간 : +1초'){
+			checkOptionType[1] = 1;
+			checkOptionAfterBeingHit++;
+		}
+		else if(s2Value == '몬스터 방어율 무시 : +40%'||
+		s2Value == '몬스터 방어율 무시 : +35%'||
+		s2Value == '몬스터 방어율 무시 : +30%'||
+		s2Value == '몬스터 방어율 무시 : +15%'){
+			checkOptionType[1] = 2;
+			checkOptionIgnoreDefense++;
+		}
+		else if(s2Value == '보스 몬스터 공격 시 데미지 : +40%'||
+		s2Value == '보스 몬스터 공격 시 데미지 : +35%'||
+		s2Value == '보스 몬스터 공격 시 데미지 : +30%'){
+			checkOptionType[1] = 2;
+			checkOptionBossAttackDamage++;
+		}
+		else if(s2Value == '피격 시 10% 확률로 데미지의 20% 무시'||
+		s2Value == '피격 시 10% 확률로 데미지의 40% 무시'||
+		s2Value == '피격 시 5% 확률로 데미지의 20% 무시'||
+		s2Value == '피격 시 5% 확률로 데미지의 40% 무시'){
+			checkOptionType[1] = 2;
+			checkOptionIgnoreDamageWhenHit++;
+		}
+		else if(s2Value == '피격 시 4% 확률로 7초간 무적'||
+		s2Value == '피격 시 2% 확률로 7초간 무적'){
+			checkOptionType[1] = 2;
+			checkOptionInvincibleWhenHit++;
+		}
+		else if(s2Value == '아이템 드롭률 : +20%'){
+			checkOptionType[1] = 2;
+			checkOptionItemDrop++;
+		}
+}
+
+if(!s3Check.checked){
+		if(s3Value == '<쓸만한 어드밴스드 블레스> 스킬 사용 가능'||
+		s3Value == '<쓸만한 미스틱 도어> 스킬 사용 가능'||
+		s3Value == '<쓸만한 하이퍼 바디> 스킬 사용 가능'||
+		s3Value == '<쓸만한 컴뱃 오더스> 스킬 사용 가능'||
+		s3Value == '<쓸만한 윈드 부스터> 스킬 사용 가능'||
+		s3Value == '<쓸만한 샤프 아이즈> 스킬 사용 가능'){
+			checkOptionType[2] = 1;
+			checkOptionSkill++;
+		}
+		else if(s3Value == '피격 후 무적시간 : +3초'||
+		s3Value == '피격 후 무적시간 : +2초'||
+		s3Value == '피격 후 무적시간 : +1초'){
+			checkOptionType[2] = 1;
+			checkOptionAfterBeingHit++;
+		}
+		else if(s3Value == '몬스터 방어율 무시 : +40%'||
+		s3Value == '몬스터 방어율 무시 : +35%'||
+		s3Value == '몬스터 방어율 무시 : +30%'||
+		s3Value == '몬스터 방어율 무시 : +15%'){
+			checkOptionType[2] = 2;
+			checkOptionIgnoreDefense++;
+		}
+		else if(s3Value == '보스 몬스터 공격 시 데미지 : +40%'||
+		s3Value == '보스 몬스터 공격 시 데미지 : +35%'||
+		s3Value == '보스 몬스터 공격 시 데미지 : +30%'){
+			checkOptionType[2] = 2;
+			checkOptionBossAttackDamage++;
+		}
+		else if(s3Value == '피격 시 10% 확률로 데미지의 20% 무시'||
+		s3Value == '피격 시 10% 확률로 데미지의 40% 무시'||
+		s3Value == '피격 시 5% 확률로 데미지의 20% 무시'||
+		s3Value == '피격 시 5% 확률로 데미지의 40% 무시'){
+			checkOptionType[2] = 2;
+			checkOptionIgnoreDamageWhenHit++;
+		}
+		else if(s3Value == '피격 시 4% 확률로 7초간 무적'||
+		s3Value == '피격 시 2% 확률로 7초간 무적'){
+			checkOptionType[2] = 2;
+			checkOptionInvincibleWhenHit++;
+		}
+		else if(s3Value == '아이템 드롭률 : +20%'){
+			checkOptionType[2] = 2;
+			checkOptionItemDrop++;
+		}
+}

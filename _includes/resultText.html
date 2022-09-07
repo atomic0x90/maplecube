@@ -1,0 +1,58 @@
+var checkCube = (cubeValue == 'red' ? '레드' :
+					(cubeValue == 'black' ? '블랙' :
+					(cubeValue == 'additional' ? '에디셔널' :
+					(cubeValue == 'expert' ? '장인의' :
+					(cubeValue == 'master' ? '명장의' : '수상한')))))
+
+resultText.innerHTML = 
+			'위 옵션을 뽑을 확률 : '+((finalPer1*finalPer2*finalPer3)/1000000)*100+'%'+'<br><br>'+
+			'첫 번째 옵션 확률 : '+finalPer1+'%<br>'+
+			'두 번째 옵션 확률 : '+finalPer2+'%<br>'+
+			'세 번째 옵션 확률 : '+finalPer3+'%<br><br>'+
+			'1000번 시뮬레이션 사용 '+checkCube+' 큐브 평균 개수 : '+resultAV+'개<br>'+
+			'1000번 시뮬레이션 사용 '+checkCube+' 큐브 중간 값 : '+resultData[500]+'개<br><br>'+
+			'1000번 시뮬레이션 중 상위 4% 사용 '+checkCube+' 큐브 개수 : '+resultData[40]+'개<br>'+
+			'1000번 시뮬레이션 중 상위 11% 사용 '+checkCube+' 큐브 개수 : '+resultData[110]+'개<br>'+
+			'1000번 시뮬레이션 중 상위 23% 사용 '+checkCube+' 큐브 개수 : '+resultData[230]+'개<br>'+
+			'1000번 시뮬레이션 중 상위 40% 사용 '+checkCube+' 큐브 개수 : '+resultData[400]+'개<br>'+
+			'1000번 시뮬레이션 중 상위 60% 사용 '+checkCube+' 큐브 개수 : '+resultData[600]+'개<br>'+
+			'1000번 시뮬레이션 중 상위 77% 사용 '+checkCube+' 큐브 개수 : '+resultData[770]+'개<br>'+
+			'1000번 시뮬레이션 중 상위 89% 사용 '+checkCube+' 큐브 개수 : '+resultData[890]+'개<br>'+
+			'1000번 시뮬레이션 중 상위 96% 사용 '+checkCube+' 큐브 개수 : '+resultData[960]+'개<br>';
+		
+		optionText.innerHTML = '<span class=\'optionText\'>설정한 옵션</span>'+'<br>'+
+
+					(rankValue == 'rare' ? '레어':
+					(rankValue == 'epic' ? '에픽':
+					(rankValue == 'unique' ? '유니크' : '레전드리')))+' 등급<br>'+
+
+					(cubeValue == 'red' ? '레드' :
+					(cubeValue == 'black' ? '블랙' :
+					(cubeValue == 'additional' ? '에디셔널' :
+					(cubeValue == 'expert' ? '장인의' :
+					(cubeValue == 'master' ? '명장의' : '수상한')))))+' 큐브<br>'+
+
+					(equipmentValue == 'weapon' ? '무기' :
+					(equipmentValue == 'emblem' ? '엠블렘' :
+					(equipmentValue == 'additionalWeapon' ? '보조무기(포스실드,소울링 제외)' :
+					(equipmentValue == 'forceshieldSouling' ? '포스실드,소울링' :
+					(equipmentValue == 'shield' ? '방패' :
+					(equipmentValue == 'hat' ? '모자' :
+					(equipmentValue == 'top' ? '상의' :
+					(equipmentValue == 'dress' ? '한벌옷' :
+					(equipmentValue == 'bottom' ? '하의' :
+					(equipmentValue == 'shoes' ? '신발' :
+					(equipmentValue == 'gloves' ? '장갑' :
+					(equipmentValue == 'cloak' ? '망토' :
+					(equipmentValue == 'belt' ? '벨트' :
+					(equipmentValue == 'shoulderDecoration' ? '어깨장식' :
+					(equipmentValue == 'faceDecoration' ? '얼굴장식' :
+					(equipmentValue == 'eyeDecoration' ? '눈장식' :
+					(equipmentValue == 'earring' ? '귀고리' :
+					(equipmentValue == 'ring' ? '반지' :
+					(equipmentValue == 'pendant' ? '펜던트' : '기계심장'
+					)))))))))))))))))))+'<br>'+
+					'레벨 제한 '+levelValue+'<br>'+
+					'첫 번째 옵션 : '+(s1Check.checked ? '없음' : s1Value)+'<br>'+
+					'두 번째 옵션 : '+(s2Check.checked ? '없음' : s2Value)+'<br>'+
+					'세 번째 옵션 : '+(s3Check.checked ? '없음' : s3Value)+'<br>';

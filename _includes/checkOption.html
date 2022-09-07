@@ -1,0 +1,101 @@
+		/* type 1 */
+		var checkOptionSkill = 0;
+
+		var checkOptionAfterBeingHit = 0;
+
+		/* type 2 */
+		var checkOptionIgnoreDefense = 0;
+
+		var checkOptionBossAttackDamage = 0;
+
+		var checkOptionIgnoreDamageWhenHit = 0;
+
+		var checkOptionInvincibleWhenHit = 0;
+
+		var checkOptionItemDrop = 0;
+
+		var checkOptionType = new Array(0,0,0);	//0: nope, 1:type 1, 2:type2
+
+		{% include /cubeIndex/s1s2s3Value.html %}
+
+		var finalPer1,finalPer2,finalPer3;
+
+		overlapOptionCheck();
+
+		if(checkOptionSkill > 1 ||
+		checkOptionAfterBeingHit > 1 ||
+		checkOptionIgnoreDefense > 2 ||
+		checkOptionBossAttackDamage > 2 ||
+		checkOptionIgnoreDamageWhenHit > 2 ||
+		checkOptionInvincibleWhenHit > 2 ||
+		checkOptionItemDrop > 2){
+			resultText.textContent = 'x';
+		}
+		else{
+			if(s1Check.checked){
+				finalPer1 = 100;
+			}
+			else{
+				finalPer1 = Number(s1Per.slice(0,s1Per.length-1));
+			}
+
+			if(s2Check.checked){
+				finalPer2 = 100;
+			}
+			else{
+				if(checkOptionType[0] == 1){
+					if(checkOptionSkill == 1){
+						finalPer2 = (Number(s2Per.slice(0,s2Per.length-1))/(100-s2PerCheckOptionSkill))*100;
+					}
+					else if(checkOptionAfterBeingHit == 1){
+						finalPer2 = (Number(s2Per.slice(0,s2Per.length-1))/(100-s2PerCheckOptionAfterBeingHit))*100;
+					}
+					else{
+						finalPer2 = Number(s2Per.slice(0,s2Per.length-1));
+					}
+				}
+				else{
+					finalPer2 = Number(s2Per.slice(0,s2Per.length-1));
+				}
+			}
+
+			if(s3Check.checked){
+				finalPer3 = 100;
+			}
+			else{
+				if(checkOptionType[0] == 1 || checkOptionType[1] == 1){
+					if(checkOptionSkill == 1){
+						finalPer3 = (Number(s3Per.slice(0,s3Per.length-1))/(100-s3PerCheckOptionSkill))*100;
+					}
+					else if(checkOptionAfterBeingHit == 1){
+						finalPer3 = (Number(s3Per.slice(0,s3Per.length-1))/(100-s3PerCheckOptionAfterBeingHit))*100;
+					}
+					else{
+						finalPer3 = Number(s3Per.slice(0,s3Per.length-1));
+					}
+				}
+				else if(checkOptionType[0] == 2 && checkOptionType[1] == 2){
+					if(checkOptionIgnoreDefense == 2){
+						finalPer3 = (Number(s3Per.slice(0,s3Per.length-1))/(100-s3PerCheckOptionIgnoreDefense))*100;
+					}
+					else if(checkOptionBossAttackDamage == 2){
+						finalPer3 = (Number(s3Per.slice(0,s3Per.length-1))/(100-s3PerCheckOptionBossAttackDamage))*100;
+					}
+					else if(checkOptionIgnoreDamageWhenHit == 2){
+						finalPer3 = (Number(s3Per.slice(0,s3Per.length-1))/(100-s3PerCheckOptionIgnoreDamageWhenHit))*100;
+					}
+					else if(checkOptionInvincibleWhenHit == 2){
+						finalPer3 = (Number(s3Per.slice(0,s3Per.length-1))/(100-s3PerCheckOptionInvincibleWhenHit))*100;
+					}
+					else if(checkOptionItemDrop == 2){
+						finalPer3 = (Number(s3Per.slice(0,s3Per.length-1))/(100-s3PerCheckOptionItemDrop))*100;
+					}
+					else{
+						finalPer3 = Number(s3Per.slice(0,s3Per.length-1));
+					}
+				}
+				else{
+					finalPer3 = Number(s3Per.slice(0,s3Per.length-1));
+				}
+			}
+		}
