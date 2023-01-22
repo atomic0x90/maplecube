@@ -69,7 +69,7 @@ body
 .mainLeft .leftAds,
 .mainRight .rightAds
 {
-	top: 0;
+	top: 100px;
 	position: sticky;
 }
 
@@ -183,7 +183,8 @@ h2
 }
 
 .main .howtouse,
-.main .optionText
+.main .optionText,
+.main .optionUpText
 {
 	display : flex;
 	justify-content : center;

@@ -128,15 +128,65 @@
 			<p>
 			<button onclick='calculateFunction()'><span>시뮬레이션 계산</span></button>
 			<p><hr><p>
-			<span id='p1'></span>
-			<span id='p2'></span>
-			<span id='p3'></span>
 
 			<span id='optionText'></span>
 
 			<br><hr><br>
 			<canvas class='resultChart'></canvas>
 			<span id='resultText'></span>
+
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2341434509700379"
+     crossorigin="anonymous"></script>
+<!-- 메이플 큐브 기댓값 계산기 중간 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2341434509700379"
+     data-ad-slot="1890060923"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+			<!-- up -->
+			<hr>
+			<span align=center><h2>메이플 큐브 등급업 기댓값 계산기</h2></span>
+			<br><hr><br>
+			<span class='howtouse'>사용 방법</span>
+			<br><hr><br>
+			<span>1.등급업 목표를 설정한다.</span><br>
+			<span>2.어떤 큐브를 돌릴지 설정한다.</span><br>
+			<span>3.미라클 타임 여부를 설정한다.</span><br>
+			<span>4.시뮬레이션을 돌려서 결과를 확인한다.</span>
+			<br><hr><br>
+			<select id='upRank' onchange='changeUpRankSelector()'>
+				<option value='rare'>레어 -> 에픽</option>
+				<option value='epic'>에픽 -> 유니크</option>
+				<option value='unique'>유니크 -> 레전더리</option>
+			</select>
+			<select id='cubeUpSelector' onchange='changeCubeUpSelector()'>
+				<option value='red'>레드 큐브</option>
+				<option value='black'>블랙 큐브</option>
+				<option value='additional'>에디셔널 큐브</option>
+				<option value='expert'>장인의 큐브</option>
+				<option value='master'>명장의 큐브</option>
+				<option value='questionable'>수상한 큐브</option>
+			</select>
+			<select id='miracleTime' onchange='miracleTimeSelector()'>
+				<option value='no'>미라클 타임 미적용</option>
+				<option value='yes'>미라클 타임 적용</option>
+			</select>
+			<button onclick='calculateUpFunction()'><span>시뮬레이션 계산</span></button>
+			<p><hr><p>
+
+			<span id='optionUpText'></span>
+
+			<br><hr><br>
+			<canvas class='resultUpChart'></canvas>
+			<span id='resultUpText'></span>
+
 
 			<div class='mainBottomBlankArea'></div>
 		</div><!-- class main -->
@@ -1139,9 +1189,6 @@
 
 	function calculateFunction(){
 		s2s3PerInit();
-		var per1 = document.querySelector('#p1');
-		var per2 = document.querySelector('#p2');
-		var per3 = document.querySelector('#p3');
 
 		var resultText = document.querySelector('#resultText');
 
@@ -1206,6 +1253,91 @@
 	{% include overlapOptionCheck.html %}
 
 	{% include s2s3PerInit.html %}	
+
+
+	/*
+		등급업
+	*/
+
+	var upRankSelector = document.querySelector('#upRank');
+	var cubeUpRankSelector = document.querySelector('#cubeUpSelector');
+	var miracleTimeSelector = document.querySelector('#miracleTime');
+	var upPer;
+	var upChart;
+
+	function changeUpRankSelector(){}
+	function changeCubeUpSelector(){}
+	function miracleTimeSelector(){}
+	function calculateUpFunction(){
+		var resultUpText = document.querySelector('#resultUpText');
+		var upRankValue = upRankSelector.options[upRankSelector.selectedIndex].value;
+		var cubeUpValue = cubeUpSelector.options[cubeUpSelector.selectedIndex].value;
+		var miracleTimeValue = miracleTimeSelector.options[miracleTimeSelector.selectedIndex].value;
+		var optionUpText = document.querySelector('#optionUpText');
+
+		if(upRankValue == 'rare'){
+			if(cubeUpValue == 'red'){upPer=6;}
+			else if(cubeUpValue == 'black'){upPer=15;}
+			else if(cubeUpValue == 'additional'){upPer=4.7619;}
+			else if(cubeUpValue == 'expert'){upPer=4.7619;}
+			else if(cubeUpValue == 'master'){upPer=7.9994;}
+			else if(cubeUpValue == 'questionable'){upPer=0.9901;}
+		}
+		else if(upRankValue == 'epic'){
+			if(cubeUpValue == 'red'){upPer=1.8;}
+			else if(cubeUpValue == 'black'){upPer=3.5;}
+			else if(cubeUpValue == 'additional'){upPer=1.9608;}
+			else if(cubeUpValue == 'expert'){upPer=1.1858;}
+			else if(cubeUpValue == 'master'){upPer=1.6959;}
+			else if(cubeUpValue == 'questionable'){upPer=0;}
+		}
+		else if(upRankValue == 'unique'){
+			if(cubeUpValue == 'red'){upPer=0.3;}
+			else if(cubeUpValue == 'black'){upPer=1.2;}
+			else if(cubeUpValue == 'additional'){upPer=0.6;}
+			else if(cubeUpValue == 'expert'){upPer=0;}
+			else if(cubeUpValue == 'master'){upPer=0.1996;}
+			else if(cubeUpValue == 'questionable'){upPer=0;}
+		}
+
+		if(miracleTimeValue == 'yes'){
+			upPer = upPer*2;
+		}
+
+		{% include makeUpChart.html %}
+
+
+		var checkUpCube = (cubeUpValue == 'red' ? '레드' :
+				(cubeUpValue == 'black' ? '블랙' :
+				(cubeUpValue == 'additional' ? '에디셔널' :
+				(cubeUpValue == 'expert' ? '장인의' :
+				(cubeUpValue == 'master' ? '명장의' : '수상한')))));
+
+		optionUpText.innerHTML = '<span class=\'optionUpText\'>설정한 옵션</span>'+'<br>'+
+					(upRankValue == 'rare' ? '레어 -> 에픽':
+					(upRankValue == 'epic' ? '에픽 -> 유니크': '유니크 -> 레전드리'))
+					+'<br>'+
+					(cubeUpValue == 'red' ? '레드':
+					(cubeUpValue == 'black' ? '블랙':
+					(cubeUpValue == 'additional' ? '에디셔널':
+					(cubeUpValue == 'expert' ? '장인의':
+					(cubeUpValue == 'master' ? '명장의' : '수상한')))))+' 큐브<br>'+
+					(miracleTimeValue == 'yes' ? '미라클 타임 적용' : '미라클 타임 미적용');
+
+		
+		resultUpText.innerHTML = '등급업 확률 : '+upPer+'%<br>'+
+'1000번 시뮬레이션 사용 '+checkUpCube+' 큐브 평균 개수 : '+resultUpAV+'개<br>'+
+'1000번 시뮬레이션 사용 '+checkUpCube+' 큐브 중간 값 : '+resultUpData[500]+'개<br><br>'+
+'1000번 시뮬레이션 중 상위 4% 사용 '+checkUpCube+' 큐브 개수 : '+resultUpData[40]+'개<br>'+
+'1000번 시뮬레이션 중 상위 11% 사용 '+checkUpCube+' 큐브 개수 : '+resultUpData[110]+'개<br>'+
+'1000번 시뮬레이션 중 상위 23% 사용 '+checkUpCube+' 큐브 개수 : '+resultUpData[230]+'개<br>'+
+'1000번 시뮬레이션 중 상위 40% 사용 '+checkUpCube+' 큐브 개수 : '+resultUpData[400]+'개<br>'+
+'1000번 시뮬레이션 중 상위 60% 사용 '+checkUpCube+' 큐브 개수 : '+resultUpData[600]+'개<br>'+
+'1000번 시뮬레이션 중 상위 77% 사용 '+checkUpCube+' 큐브 개수 : '+resultUpData[770]+'개<br>'+
+'1000번 시뮬레이션 중 상위 89% 사용 '+checkUpCube+' 큐브 개수 : '+resultUpData[890]+'개<br>'+
+'1000번 시뮬레이션 중 상위 96% 사용 '+checkUpCube+' 큐브 개수 : '+resultUpData[960]+'개<br>';
+		
+	}//calculateUpFunction
 
 </script>
 

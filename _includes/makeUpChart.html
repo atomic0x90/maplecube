@@ -1,0 +1,33 @@
+var resultUpAV = 0;
+
+const resultUpPer = d3.randomGeometric(upPer/100);
+var resultUpData = [];
+for(var i = 0;i < 1000;i++){
+	var tmp = resultUpPer();
+	resultUpData[i] = tmp;
+	resultUpAV += tmp;
+}
+
+resultUpAV /= 1000;
+resultUpData.sort(function(a,b){return a-b;});
+
+var labelUpArray = new Array(1000);
+
+for(var i = 0;i < labelUpArray.length;i++) labelUpArray[i] = i+1;
+
+if(upChart != undefined) upChart.destroy();
+
+var resultUpChart = document.querySelectorAll('.resultUpChart');
+upChart = new Chart(resultUpChart,{
+		type: 'line',
+		data: {
+			labels:labelUpArray,
+			datasets:[{
+				label:'위 옵션을 시도했을 때 사용한 큐브 개수',
+				data:resultUpData,
+				backgroundColor:"rgba(40,123,255,0.5)"
+			}]
+		},
+		options: {% include chartOption.html %}
+	});
+
