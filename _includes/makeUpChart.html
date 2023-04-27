@@ -17,6 +17,56 @@ for(var i = 0;i < labelUpArray.length;i++) labelUpArray[i] = i+1;
 
 if(upChart != undefined) upChart.destroy();
 
+
+//등급업 천장
+let cubeMAX = -1;
+
+if(cubeUpValue == 'red'){
+	if(upRankValue == 'rare') cubeMAX = 25;
+	else if(upRankValue == 'epic') cubeMAX = 83;
+	else cubeMAX = 500;
+}
+else if(cubeUpValue == 'black'){
+	if(upRankValue == 'rare') cubeMAX = 10;
+	else if(upRankValue == 'epic') cubeMAX = 42;
+	else cubeMAX = 107;
+}
+else if(cubeUpValue == 'additional'){
+	if(upRankValue == 'rare') cubeMAX = 31;
+	else if(upRankValue == 'epic') cubeMAX = 76;
+	else cubeMAX = 214;
+}
+
+for(var i = 0;i < 1000;i++){
+	if(resultUpData[i] > cubeMAX) resultUpData[i] = cubeMAX;
+}
+
+
+
+
+var checkUpCube = (cubeUpValue == 'red' ? '레드' :
+		(cubeUpValue == 'black' ? '블랙' :
+		(cubeUpValue == 'additional' ? '에디셔널' :
+		(cubeUpValue == 'expert' ? '장인의' :
+		(cubeUpValue == 'master' ? '명장의' : 
+		(cubeUpValue == 'questionable' ? '수상한' : '수상한 에디셔널'))))));
+
+optionUpText.innerHTML = '<span class=\'optionUpText\'>설정한 옵션</span>'+'<br>'+
+			(upRankValue == 'rare' ? '레어 -> 에픽':
+			(upRankValue == 'epic' ? '에픽 -> 유니크': '유니크 -> 레전드리'))
+			+'<br>'+
+			(cubeUpValue == 'red' ? '레드':
+			(cubeUpValue == 'black' ? '블랙':
+			(cubeUpValue == 'additional' ? '에디셔널':
+			(cubeUpValue == 'expert' ? '장인의':
+			(cubeUpValue == 'master' ? '명장의' : 
+			(cubeUpValue == 'questionable' ? '수상한' : '수상한 에디셔널'))))))+' 큐브<br>'+
+			(miracleTimeValue == 'yes' ? '미라클 타임 적용' : '미라클 타임 미적용')
+
+			+'<br>'+
+			'등급 상승 보장 횟수 : '+(cubeMAX == -1 ? '-' : cubeMAX);
+
+
 var resultUpChart = document.querySelectorAll('.resultUpChart');
 upChart = new Chart(resultUpChart,{
 		type: 'line',
