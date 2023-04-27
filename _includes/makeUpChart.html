@@ -5,10 +5,8 @@ var resultUpData = [];
 for(var i = 0;i < 1000;i++){
 	var tmp = resultUpPer();
 	resultUpData[i] = tmp;
-	resultUpAV += tmp;
 }
 
-resultUpAV /= 1000;
 resultUpData.sort(function(a,b){return a-b;});
 
 var labelUpArray = new Array(1000);
@@ -39,8 +37,9 @@ else if(cubeUpValue == 'additional'){
 
 for(var i = 0;i < 1000;i++){
 	if(resultUpData[i] > cubeMAX) resultUpData[i] = cubeMAX;
+	resultUpAV += resultUpData[i];
 }
-
+resultUpAV /= 1000;
 
 
 
