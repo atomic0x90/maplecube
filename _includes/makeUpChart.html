@@ -15,7 +15,6 @@ for(var i = 0;i < labelUpArray.length;i++) labelUpArray[i] = i+1;
 
 if(upChart != undefined) upChart.destroy();
 
-
 //등급업 천장
 let cubeMAX = -1;
 
@@ -36,7 +35,7 @@ else if(cubeUpValue == 'additional'){
 }
 
 for(var i = 0;i < 1000;i++){
-	if(resultUpData[i] > cubeMAX) resultUpData[i] = cubeMAX;
+	if(cubeMAX != -1 && resultUpData[i] > cubeMAX) resultUpData[i] = cubeMAX;
 	resultUpAV += resultUpData[i];
 }
 resultUpAV /= 1000;
