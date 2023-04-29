@@ -2,7 +2,8 @@ var checkCube = (cubeValue == 'red' ? '레드' :
 					(cubeValue == 'black' ? '블랙' :
 					(cubeValue == 'additional' ? '에디셔널' :
 					(cubeValue == 'expert' ? '장인의' :
-					(cubeValue == 'master' ? '명장의' : '수상한')))))
+					(cubeValue == 'master' ? '명장의' : 
+					(cubeValue == 'qustionable' ? '수상한' : '수상한 에디셔널'))))))
 
 resultText.innerHTML = 
 			'위 옵션을 뽑을 확률 : '+((finalPer1*finalPer2*finalPer3)/1000000)*100+'%'+'<br><br>'+
@@ -30,7 +31,8 @@ resultText.innerHTML =
 					(cubeValue == 'black' ? '블랙' :
 					(cubeValue == 'additional' ? '에디셔널' :
 					(cubeValue == 'expert' ? '장인의' :
-					(cubeValue == 'master' ? '명장의' : '수상한')))))+' 큐브<br>'+
+					(cubeValue == 'master' ? '명장의' : 
+					(cubeValue == 'qustionable' ? '수상한' : '수상한 에디셔널'))))))+' 큐브<br>'+
 
 					(equipmentValue == 'weapon' ? '무기' :
 					(equipmentValue == 'emblem' ? '엠블렘' :
