@@ -70,8 +70,8 @@
 		</div>
 
 		<div class='main'>
-			<span align=center><h2>2023.04.20 업데이트 적용했습니다.</h2>
-			<h4>1. 큐브 등급 상승 보장<p>2. 유니크, 레전드리 방어력 삭제<p>3. 잠재 옵션 수치 조정<p>4. 수상한 에디셔널 큐브</h4>
+			<span align=center><h2>2023.07.14 업데이트 적용했습니다.</h2>
+			<h4>1. 미라클 타임시 등급 보장 횟수 2회 증가 적용</h4>
 			<h6>오류, 업데이트 누락은 mapledataconnect@gmail.com 로 보내주세요.</h6>
 			</span>
 			<hr>
@@ -1417,6 +1417,7 @@
 	function changeCubeUpSelector(){}
 	function miracleTimeSelector(){}
 	function calculateUpFunction(){
+		var upMax=1;
 		var resultUpText = document.querySelector('#resultUpText');
 		var upRankValue = upRankSelector.options[upRankSelector.selectedIndex].value;
 		var cubeUpValue = cubeUpSelector.options[cubeUpSelector.selectedIndex].value;
@@ -1453,6 +1454,7 @@
 
 		if(miracleTimeValue == 'yes'){
 			upPer = upPer*2;
+			upMax = upMax*2;
 		}
 
 		{% include makeUpChart.html %}

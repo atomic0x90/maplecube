@@ -35,7 +35,7 @@ else if(cubeUpValue == 'additional'){
 }
 
 for(var i = 0;i < 1000;i++){
-	if(cubeMAX != -1 && resultUpData[i] > cubeMAX) resultUpData[i] = cubeMAX;
+	if(cubeMAX != -1 && resultUpData[i] > Math.ceil(cubeMAX/upMax)) resultUpData[i] = Math.ceil(cubeMAX/upMax);
 	resultUpAV += resultUpData[i];
 }
 resultUpAV /= 1000;
@@ -62,7 +62,7 @@ optionUpText.innerHTML = '<span class=\'optionUpText\'>설정한 옵션</span>'+
 			(miracleTimeValue == 'yes' ? '미라클 타임 적용' : '미라클 타임 미적용')
 
 			+'<br>'+
-			'등급 상승 보장 횟수 : '+(cubeMAX == -1 ? '-' : cubeMAX);
+			'등급 상승 보장 횟수 : '+(cubeMAX == -1 ? '-' : Math.ceil(cubeMAX/upMax));
 
 
 var resultUpChart = document.querySelectorAll('.resultUpChart');
